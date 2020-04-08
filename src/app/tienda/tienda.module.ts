@@ -1,0 +1,35 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TiendaRoutingModule } from './tienda.routing';
+import { TiendaComponent } from './tienda/tienda.component';
+import { ProductosComponent } from './productos/productos.component';
+import { FooterComponent } from './footer/footer.component';
+import { MainsComponent } from './main/mains.component';
+import { MenuComponent } from './menu/menu.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { InfoProductoComponent } from './info-producto/info-producto.component';
+import { MyOwnCustomMaterialModule } from '../app.material.module';
+import { FormsModule } from '@angular/forms';
+import { ProductosViewComponent } from './producto-view/producto-view.component';
+import { NgxImageZoomModule } from 'ngx-image-zoom';
+import { ContactoComponent } from './contacto/contacto.component';
+import { NgImageSliderModule } from 'ng-image-slider';
+
+
+@NgModule({
+  entryComponents: [ InfoProductoComponent ],
+  declarations: [MainsComponent, TiendaComponent, ProductosComponent, FooterComponent, MenuComponent, InfoProductoComponent, ProductosViewComponent, ContactoComponent],
+  imports: [
+    TiendaRoutingModule,
+    CommonModule,
+    InfiniteScrollModule,
+    NgxSpinnerModule,
+    MyOwnCustomMaterialModule,
+    FormsModule,
+    NgxImageZoomModule,
+    NgImageSliderModule
+  ],
+  exports: [ InfoProductoComponent ]
+})
+export class TiendaModule { }
