@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CART } from 'src/app/interfaces/sotarage';
 import { ToolsService } from 'src/app/services/tools.service';
 import { Store } from '@ngrx/store';
@@ -9,6 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import * as _ from 'lodash';
 import { MatDialog } from '@angular/material';
 import { InfoProductoComponent } from '../info-producto/info-producto.component';
+import { NgImageSliderComponent } from 'ng-image-slider';
 
 @Component({
   selector: 'app-producto-view',
@@ -28,13 +29,34 @@ export class ProductosViewComponent implements OnInit {
       pro_activo: 0
     },
     page: 0,
-    limit: 5
+    limit: 10
   };
   loader:boolean = false;
   notEmptyPost:boolean = true;
   notscrolly:boolean=true;
   listProductosHistorial:any = [];
   tiendaInfo:any = {};
+
+  imageObject:any = [
+    {
+      image: "./assets/imagenes/1920x700.png",
+      thumbImage: "./assets/imagenes/1920x700.png",
+      alt: '',
+      check: true,
+      id: 1,
+      title: ""
+    }
+  ];
+  @ViewChild('nav', {static: true}) ds: NgImageSliderComponent;
+  sliderWidth: Number = 1119;
+  sliderImageWidth: Number = 250;
+  sliderImageHeight: Number = 200;
+  sliderArrowShow: Boolean = true;
+  sliderInfinite: Boolean = true;
+  sliderImagePopup: Boolean = false;
+  sliderAutoSlide: Number = 0;
+  sliderSlideImage: Number = 1;
+  sliderAnimationSpeed: any = 1;
   
   constructor(
     private _store: Store<CART>,
@@ -69,7 +91,21 @@ export class ProductosViewComponent implements OnInit {
   getProductos(){
     this.spinner.show();
     this._producto.get( this.query ).subscribe((res:any)=>{ 
-      this.listProductos = _.unionBy( this.listProductos || [], res.data, 'id' );
+      if( res.data[0] ) this.imageObject = [];
+      for( let row of res.data ){
+        this.imageObject.push(
+          {
+            image: row.foto,
+            thumbImage: row.foto,
+            alt: '',
+            check: true,
+            id: row.id,
+            ids: row.id,
+            title: row.pro_uni_venta
+          }
+        );
+        this.listProductos.push( row );
+      }
       this.spinner.hide();
       this.loader = false;
       if (res.data.length === 0 ) {
@@ -81,7 +117,6 @@ export class ProductosViewComponent implements OnInit {
 
   suma(){
     this.data.costo = Number( this.pedido.cantidad ) * this.data.pro_uni_venta;
-    console.log(this.pedido, this.data.costo)
   }
 
   codigo(){
@@ -144,6 +179,28 @@ export class ProductosViewComponent implements OnInit {
     let accion = new CartAction(data, 'post');
     this._store.dispatch(accion);
     this._tools.presentToast("Agregado al Carro");
+  }
+
+  imageOnClick(obj:any) {
+    let data =  this.listProductos.find( (row:any )=> row.id == this.imageObject[obj].id);
+    if( !data ) return false;
+    this.viewProducto( data );
+  }
+
+  arrowOnClick(event) {
+      // console.log('arrow click event', event);
+  }
+
+  lightboxArrowClick(event) {
+      // console.log('popup arrow click', event);
+  }
+
+  prevImageClick() {
+      this.ds.prev();
+  }
+
+  nextImageClick() {
+      this.ds.next();
   }
 
 

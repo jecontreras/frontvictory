@@ -1,6 +1,7 @@
 <!-- catg header banner section -->
 <section id="aa-catg-head-banner">
-  <img [src]="tiendaInfo.portada3 || './assets/img/fashion/fashion-header-bg-8.jpg'" class="anchosBanner" alt="fashion img">
+  <img [src]="tiendaInfo.portada3 || './assets/img/fashion/fashion-header-bg-8.jpg'" class="anchosBanner"
+    alt="fashion img">
   <div class="aa-catg-head-banner-area">
     <div class="container">
       <div class="aa-catg-head-banner-content">
@@ -177,28 +178,12 @@
             <h3>Productos Relacionados</h3>
             <ul class="aa-product-catg aa-related-item-slider">
               <!-- start single product item -->
-              <li *ngFor="let item of listProductos" id="anchosLi">
-                <figure>
-                  <a class="aa-product-img" href="#" [routerLink]="[ '/tienda/productosView', item.id ]"><img
-                      class="anchosProductos" [src]="item.foto" alt="polo shirt img"></a>
-                  <a class="aa-add-card-btn pointer" (click)="AgregarCart2(item)"><span
-                      class="fa fa-shopping-cart"></span>Agregar al Carro</a>
-                  <figcaption>
-                    <h4 class="aa-product-title"><a href="#">{{ item.pro_nombre }}</a></h4>
-                    <span class="aa-product-price">${{ item.pro_uni_venta*2 }}</span><span
-                      class="aa-product-price"><del>${{ item.pro_uni_venta }}</del></span>
-                  </figcaption>
-                </figure>
-                <div class="aa-product-hvr-content">
-                  <a href="https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&u=https://www.locomproaqui.com/productos/15?u=https://www.locomproaqui.com/productos/{{ item.id }}"
-                    target="_blank" data-toggle="tooltip" data-placement="top" title="Compartir"><span
-                      class="fa fa-exchange"></span></a>
-                  <a class="pointer" (click)="viewProducto( item )" title="Ver Producto"><span
-                      class="fa fa-search"></span></a>
-                </div>
-                <!-- product badge -->
-                <span class="aa-badge aa-sale" href="#">SALE!</span>
-              </li>
+              <ng-image-slider [images]="imageObject" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
+                  [showArrow]="sliderArrowShow" [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
+                  [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage"
+                  [animationSpeed]="sliderAnimationSpeed" (imageClick)="imageOnClick($event)"
+                  (arrowClick)="arrowOnClick($event)" (lightboxArrowClick)="lightboxArrowClick($event)" #nav>
+                </ng-image-slider>
             </ul>
           </div>
         </div>
