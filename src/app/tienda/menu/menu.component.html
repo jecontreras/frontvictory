@@ -44,8 +44,10 @@
                         <li><span>total: </span> <span>$ {{ ( data.total || 0 ) | currency:'COP':true}}</span></li>
                     </ul>
                     <div class="d-flex justify-content-end">
-                        <a class="list-group-item list-group-item-action active" target="_blank" [href]="urlwhat">Hacer
+                        <a class="list-group-item list-group-item-action active pointer" (click)="openEpayco()">Hacer
                             Pedido</a>
+                        <!-- <a class="list-group-item list-group-item-action active" target="_blank" [href]="urlwhat">Hacer
+                            Pedido</a> -->
                     </div>
                 </div>
             </div>
