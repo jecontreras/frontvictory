@@ -40,12 +40,14 @@
             <div class="cart-content d-flex p-2">
                 <div class="cart-amount-summary">
                     <h2>Resumen</h2>
-                    <ul class="summary-table">
+                    <ul class="summary-table text-light">
                         <li><span>total: </span> <span>$ {{ ( data.total || 0 ) | currency:'COP':true}}</span></li>
                     </ul>
                     <div class="d-flex justify-content-end">
                         <a class="list-group-item list-group-item-action active" target="_blank" [routerLink]="['./carrito']" routerLinkActive="router-link-active" >Hacer
                             Pedido</a>
+                        <!-- <a class="list-group-item list-group-item-action active" target="_blank" [href]="urlwhat">Hacer
+                            Pedido</a> -->
                     </div>
                 </div>
             </div>

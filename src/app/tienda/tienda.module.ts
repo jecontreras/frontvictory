@@ -17,11 +17,12 @@ import { ContactoComponent } from './contacto/contacto.component';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { ChecktComponent } from './checkt/checkt.component';
 import { CarritoComponent } from './carrito/carrito.component';
+import { CompletarComponent } from './completar/completar.component';
 
 
 @NgModule({
   entryComponents: [ InfoProductoComponent ],
-  declarations: [MainsComponent, TiendaComponent, ProductosComponent, FooterComponent, MenuComponent, InfoProductoComponent, ProductosViewComponent, ContactoComponent, ChecktComponent, CarritoComponent],
+  declarations: [MainsComponent, TiendaComponent, ProductosComponent, FooterComponent, MenuComponent, InfoProductoComponent, ProductosViewComponent, ContactoComponent, ChecktComponent, CarritoComponent, CompletarComponent],
   imports: [
     TiendaRoutingModule,
     CommonModule,
