@@ -12,18 +12,21 @@
     display:inline-block;
 }
 .colorFondo{
-    background-color: #69ff43;
+    background-color: #000000;
 }
 
 div {
     text-align:center;
+}
+.mat-drawer-content{
+    overflow: initial !important;
 }
 div ul {
     margin: 0;
     padding: 0;
     display: inline-block;
     list-style: none;
-    background-color: #69ff43;
+    background-color: #000000;
     border-bottom: 5px solid #ddd;
     border-top: 1px solid #ccc;
 }

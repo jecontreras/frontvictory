@@ -15,11 +15,13 @@ import { ProductosViewComponent } from './producto-view/producto-view.component'
 import { NgxImageZoomModule } from 'ngx-image-zoom';
 import { ContactoComponent } from './contacto/contacto.component';
 import { NgImageSliderModule } from 'ng-image-slider';
+import { ChecktComponent } from './checkt/checkt.component';
+import { CarritoComponent } from './carrito/carrito.component';
 
 
 @NgModule({
   entryComponents: [ InfoProductoComponent ],
-  declarations: [MainsComponent, TiendaComponent, ProductosComponent, FooterComponent, MenuComponent, InfoProductoComponent, ProductosViewComponent, ContactoComponent],
+  declarations: [MainsComponent, TiendaComponent, ProductosComponent, FooterComponent, MenuComponent, InfoProductoComponent, ProductosViewComponent, ContactoComponent, ChecktComponent, CarritoComponent],
   imports: [
     TiendaRoutingModule,
     CommonModule,

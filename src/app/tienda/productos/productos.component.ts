@@ -9,6 +9,7 @@ import { InfoProductoComponent } from '../info-producto/info-producto.component'
 import { ProductoHistorialAction, CartAction, BuscadorAction } from 'src/app/redux/app.actions';
 import * as _ from 'lodash';
 import { ToolsService } from 'src/app/services/tools.service';
+import { FormatosService } from 'src/app/services/formatos.service';
 
 @Component({
   selector: 'app-productos',
@@ -20,7 +21,8 @@ export class ProductosComponent implements OnInit {
   listProductos:any = [];
   query:any = {
     where:{
-      pro_activo: 0
+      pro_activo: 0,
+      //pro_categoria: { '!=' : [2,3,12] }
     },
     page: 0,
     limit: 15
@@ -44,7 +46,8 @@ export class ProductosComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private _store: Store<CART>,
     public dialog: MatDialog,
-    private _tools: ToolsService
+    private _tools: ToolsService,
+    public _formato: FormatosService
   ) { 
     this._store.subscribe((store: any) => {
       store = store.name;

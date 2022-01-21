@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
-  url: "https://backlocomproaqui.herokuapp.com",
-  urlFront: "https://www.locomproaqui.com"
+  url: "https://backdilishop.herokuapp.com",
+  urlFront: "https://liamstilos.web.app",
+  URLFILE: "https://backlocompro.herokuapp.com",
 };

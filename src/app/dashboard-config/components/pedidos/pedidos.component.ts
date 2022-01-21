@@ -46,7 +46,7 @@ export class PedidosComponent implements OnInit {
 
   notscrolly:boolean=true;
   notEmptyPost:boolean = true;
-
+  tiendaInfo:any = {};
 
   constructor(
     private _productos: ProductoService,
@@ -61,10 +61,10 @@ export class PedidosComponent implements OnInit {
 
     this.cargarProductos();
     this._store.subscribe((store: any) => {
-      console.log(store);
       store = store.name;
       if(!store) return false;
       this.userId = store.usercabeza;
+      this.tiendaInfo = store.configuracion || {};
     });
 
   }
@@ -165,8 +165,8 @@ export class PedidosComponent implements OnInit {
     }); 
   }
   masInfo(obj:any){
-    if(this.userId) this.urlwhat = `https://wa.me/${ this.userId.usu_indicativo || 57 }${ this.userId.usu_telefono || '3148487506'}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo}`;
-    else this.urlwhat = `https://wa.me/573148487506?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo}`;
+    if(this.userId) this.urlwhat = `https://wa.me/${ this.userId.usu_indicativo || 57 }${ this.userId.usu_telefono || '3208429429'}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo}`;
+    else this.urlwhat = `https://wa.me/57${ this.tiendaInfo.numeroCelular }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo}`;
     window.open(this.urlwhat);
   }
   
@@ -189,7 +189,6 @@ export class PedidosComponent implements OnInit {
   }
 
   AgregarCart(item:any){
-    console.log(item);
     let data:any = {
       articulo: item.id,
       codigo: item.pro_codigo,

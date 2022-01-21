@@ -73,6 +73,7 @@ export class ConfigComponent implements OnInit {
 
   Actualizar(){
     this.data = _.omit(this.data, ['createdAt', 'updatedAt']);
+    this.data = _.omitBy( this.data, _.isNull);
     this._configuracion.update(this.data).subscribe((res:any)=>{
       console.log(res);
       this._tools.presentToast("Actualizado");

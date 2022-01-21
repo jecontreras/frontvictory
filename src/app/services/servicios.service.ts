@@ -13,6 +13,7 @@ const headers = new HttpHeaders({
 });
 
 const URL = environment.url;
+const URLFILE = environment.URLFILE;
 
 @Injectable({
   providedIn: 'root'
@@ -67,6 +68,16 @@ export class ServiciosService {
     data.skip = datas.page ? datas.page : 0;
     data.limit = datas.limit ? datas.limit : 10;
     query = URL+`/${query}`;
+    return this.ejecutarQuery(query, data, METODO);
+  }
+
+  querys2(query:string, datas:any, METODO:string){
+    let data = datas;
+    if(!datas.where) datas.where = {};
+    data.skip = datas.page ? datas.page : 0;
+    data.limit = datas.limit ? datas.limit : 10;
+    query = URLFILE+`/${query}`;
+    delete data.where.app;
     return this.ejecutarQuery(query, data, METODO);
   }
 

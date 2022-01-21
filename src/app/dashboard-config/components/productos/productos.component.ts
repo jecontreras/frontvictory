@@ -34,7 +34,7 @@ export class ProductosComponent implements OnInit {
     page: 0,
     limit: 10
   };
-  Header:any = [ 'Acciones','Foto','Nombre','Codigo','Categoria','Estado'];
+  Header:any = [ 'Acciones','Foto','Nombre','Codigo', 'Precio', 'Categoria','Estado', 'Creado'];
   $:any;
   public datoBusqueda = '';
   notscrolly:boolean=true;
@@ -58,7 +58,9 @@ export class ProductosComponent implements OnInit {
 
   crear(obj:any){
     const dialogRef = this.dialog.open(FormproductosComponent,{
-      data: {datos: obj || {}}
+      data: {datos: obj || {}},
+      height:  '550px',
+      width: '100%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -72,7 +74,7 @@ export class ProductosComponent implements OnInit {
     }
     this._tools.confirm({title:"Eliminar", detalle:"Deseas Eliminar Dato", confir:"Si Eliminar"}).then((opt)=>{
       if(opt.value){
-        this._productos.update(obj).subscribe((res:any)=>{
+        this._productos.update(datos).subscribe((res:any)=>{
           this.dataTable.dataRows.splice(idx, 1);
           this._tools.presentToast("Eliminado")
         },(error)=>{console.error(error); this._tools.presentToast("Error de servidor") })

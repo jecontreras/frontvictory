@@ -10,6 +10,7 @@ import { CartAction, ProductoHistorialAction } from 'src/app/redux/app.actions';
 import { InfoProductoComponent } from '../info-producto/info-producto.component';
 import * as _ from 'lodash';
 import { NgImageSliderComponent } from 'ng-image-slider';
+import { FormatosService } from 'src/app/services/formatos.service';
 
 @Component({
   selector: 'app-tienda',
@@ -67,7 +68,7 @@ export class TiendaComponent implements OnInit {
   sliderImagePopup: Boolean = false;
   sliderAutoSlide: Number = 1;
   sliderSlideImage: Number = 1;
-  sliderAnimationSpeed: any = 1;
+  sliderAnimationSpeed: any = 5;
 
   sliderWidth2: Number = 1505;
   sliderImageWidth2: Number = 247;
@@ -83,7 +84,8 @@ export class TiendaComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private _store: Store<CART>,
     public dialog: MatDialog,
-    private _tools: ToolsService
+    private _tools: ToolsService,
+    public _formato: FormatosService
   ) { 
     this._store.subscribe((store: any) => {
       console.log(store);

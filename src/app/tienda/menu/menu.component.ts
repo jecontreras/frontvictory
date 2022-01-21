@@ -59,17 +59,17 @@ export class MenuComponent implements OnInit {
   }
 
   submitChat(){
-    let texto:string;
+    let texto:string =  '';
     this.data.total = 0;
     for(let row of this.listCart){
-      texto+= ` productos: ${ row.titulo } codigo: ${ row.codigo } foto: ${ row.foto } cantidad: ${ row.cantidad } color ${ row.color || 'default'}`;
+      texto+= ` productos: ${ row.titulo } foto: ${ row.foto } cantidad: ${ row.cantidad } color ${ row.color || 'default'}`;
       this.data.total+= row.costoTotal || 0;
     }
     //console.log(this.dataUser, this.userId)
     if(this.userId.id){
-      this.urlwhat = `https://wa.me/${ this.userId.usu_indicativo || 57 }${ this.userId.usu_telefono || 3148487506 }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en comprar los siguientes ${texto}`
+      this.urlwhat = `https://wa.me/${ this.userId.usu_indicativo || 57 }${ this.userId.usu_telefono || ( this.tiendaInfo.numeroCelular || '3208429429' ) }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en comprar los siguientes ${texto}`
     }else{
-      this.urlwhat = `https://wa.me/573148487506?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en comprar los siguientes ${texto}`
+      this.urlwhat = `https://wa.me/57${ this.tiendaInfo.numeroCelular || '3208429429' }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en comprar los siguientes ${texto}`
     }
   }
 

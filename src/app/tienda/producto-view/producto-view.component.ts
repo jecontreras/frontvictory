@@ -10,6 +10,7 @@ import * as _ from 'lodash';
 import { MatDialog } from '@angular/material';
 import { InfoProductoComponent } from '../info-producto/info-producto.component';
 import { NgImageSliderComponent } from 'ng-image-slider';
+import { FormatosService } from 'src/app/services/formatos.service';
 
 @Component({
   selector: 'app-producto-view',
@@ -20,7 +21,7 @@ export class ProductosViewComponent implements OnInit {
 
   id:any;
   data:any = {};
-  pedido:any = {};
+  pedido:any = { cantidad:1 };
   view:string = "descripcion";
   rango:number = 250;
   listProductos:any = [];
@@ -47,6 +48,27 @@ export class ProductosViewComponent implements OnInit {
       title: ""
     }
   ];
+  imageObject2:any = [
+    {
+      image: "./assets/imagenes/1920x700.png",
+      thumbImage: "./assets/imagenes/1920x700.png",
+      alt: '',
+      check: true,
+      id: 1,
+      title: ""
+    }
+  ];
+  imageObject3:any = [
+    {
+      image: "./assets/imagenes/1920x700.png",
+      thumbImage: "./assets/imagenes/1920x700.png",
+      alt: '',
+      check: true,
+      id: 1,
+      title: ""
+    }
+  ];
+
   @ViewChild('nav', {static: true}) ds: NgImageSliderComponent;
   sliderWidth: Number = 1119;
   sliderImageWidth: Number = 250;
@@ -57,7 +79,10 @@ export class ProductosViewComponent implements OnInit {
   sliderAutoSlide: Number = 0;
   sliderSlideImage: Number = 1;
   sliderAnimationSpeed: any = 1;
-  
+  userId:any = {};
+  dataUser:any = {};
+  urlwhat:string
+
   constructor(
     private _store: Store<CART>,
     private _tools: ToolsService,
@@ -66,11 +91,14 @@ export class ProductosViewComponent implements OnInit {
     private Router: Router,
     private spinner: NgxSpinnerService,
     public dialog: MatDialog,
+    public _formato: FormatosService
   ) { 
     this._store.subscribe((store: any) => {
       console.log(store);
       store = store.name;
       if(!store) return false;
+      this.userId = store.usercabeza || {};
+      this.dataUser = store.user || {};
       this.listProductosHistorial = _.orderBy(store.productoHistorial, ['createdAt'], ['DESC']);
       this.tiendaInfo = store.configuracion || {};
     });
@@ -88,31 +116,78 @@ export class ProductosViewComponent implements OnInit {
     this._producto.get({ where: { id: this.id}}).subscribe((res:any)=>{ this.data = res.data[0] || {}; }, error=> { console.error(error); this._tools.presentToast('Error de servidor'); });
   }
 
-  getProductos(){
-    this.spinner.show();
-    this._producto.get( this.query ).subscribe((res:any)=>{ 
-      if( res.data[0] ) this.imageObject = [];
-      for( let row of res.data ){
-        this.imageObject.push(
-          {
-            image: row.foto,
-            thumbImage: row.foto,
-            alt: '',
-            check: true,
-            id: row.id,
-            ids: row.id,
-            title: row.pro_uni_venta
-          }
-        );
-        this.listProductos.push( row );
-      }
-      this.spinner.hide();
-      this.loader = false;
-      if (res.data.length === 0 ) {
-        this.notEmptyPost =  false;
-      }
-      this.notscrolly = true;
-    }, ( error )=> { console.error(error); this.spinner.hide(); this.loader = false;});
+  async getProductos(){
+    this.query = {
+      where:{
+        pro_activo: 0
+      },
+      page: 0,
+      limit: 20
+    };
+    let resultado:any = await this.getArticulos();
+    for( let row of resultado ){
+      this.imageObject.push(
+        {
+          image: row.foto,
+          thumbImage: row.foto,
+          alt: '',
+          check: true,
+          id: row.id,
+          ids: row.id,
+          title: this._formato.monedaChange( 3, 2, row.pro_uni_venta || 0 )
+        }
+      );
+    }
+    this.query = {
+      where:{
+        pro_activo: 0
+      },
+      page: 1,
+      limit: 20
+    };
+    resultado = await this.getArticulos();
+    for( let row of resultado ){
+      this.imageObject2.push(
+        {
+          image: row.foto,
+          thumbImage: row.foto,
+          alt: '',
+          check: true,
+          id: row.id,
+          ids: row.id,
+          title: this._formato.monedaChange( 3, 2, row.pro_uni_venta || 0 )
+        }
+      );
+    }
+    this.query = {
+      where:{
+        pro_activo: 0
+      },
+      page: 2,
+      limit: 20
+    };
+    resultado = await this.getArticulos();
+    for( let row of resultado ){
+      this.imageObject3.push(
+        {
+          image: row.foto,
+          thumbImage: row.foto,
+          alt: '',
+          check: true,
+          id: row.id,
+          ids: row.id,
+          title: this._formato.monedaChange( 3, 2, row.pro_uni_venta || 0 )
+        }
+      );
+    }
+  }
+
+  getArticulos(){
+    return new Promise (resolve =>{
+      this._producto.get( this.query ).subscribe((res:any)=>{
+        resolve( res.data )
+      }, ( error )=> { console.error(error); resolve( [] ); } );
+    })
   }
 
   suma(){
@@ -201,6 +276,34 @@ export class ProductosViewComponent implements OnInit {
 
   nextImageClick() {
       this.ds.next();
+  }
+
+  masInfo(obj:any){
+    obj.talla = this.pedido.talla;
+    obj.cantidad = this.pedido.cantidad || 1;
+    let cerialNumero:any = ''; 
+    let numeroSplit:any;
+    let cabeza:any = this.dataUser.cabeza;
+    if( cabeza ){
+      numeroSplit = _.split( cabeza.usu_telefono, "+57", 2);
+      if( numeroSplit[1] ) cabeza.usu_telefono = numeroSplit[1];
+      if( cabeza.usu_perfil == 3 ) cerialNumero = ( cabeza.usu_indicativo || '57' ) + ( cabeza.usu_telefono || '3208429429' );
+      else cerialNumero = "57"+this.validarNumero();
+    }else cerialNumero = "57"+this.validarNumero();
+    if(this.userId.id) this.urlwhat = `https://wa.me/${ this.userId.usu_indicativo || 57 }${ ( (_.split( this.userId.usu_telefono , "+57", 2))[1] ) || '3208429429'}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo} foto ==> ${ obj.foto } Talla: ${ obj.talla || 'default' }`;
+    else {
+      this.urlwhat = `https://wa.me/${ cerialNumero }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo} foto ==> ${ obj.foto } Talla: ${ obj.talla || 'default'}`;
+    }
+    window.open(this.urlwhat);
+  }
+
+  comprarArticulo( ){
+    this.AgregarCart();
+    this.Router.navigate( ['tienda/carrito'] );
+  }
+
+  validarNumero(){
+    return this.tiendaInfo.numeroCelular || "3208429429";
   }
 
 

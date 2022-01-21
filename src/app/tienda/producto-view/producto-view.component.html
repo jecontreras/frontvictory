@@ -42,15 +42,15 @@
                 <div class="aa-product-view-content p-3">
                   <h3>{{ data.pro_nombre }}</h3>
                   <div class="aa-price-block">
-                    <span class="aa-product-view-price">{{ ( data.pro_uni_venta || 0).toLocaleString(1) }} COP</span>
+                    <span class="aa-product-view-price">{{ _formato.monedaChange( 3, 2, data.pro_uni_venta || 0 ) }}</span>
                     <p class="aa-product-avilability">Disponibilidad: <span>En stock</span></p>
                   </div>
                   <p [innerHtml]="data.pro_descripcion | slice: 0: rango"></p>
-                  <h4>Talla</h4>
+                  <!--<h4>Talla</h4>
                   <div class="aa-prod-view-size">
-                    <a class="pointer" *ngFor="let item of data.listTallas"
-                      (click)="this.pedido.talla = item.tal_descripcion">{{ item.tal_descripcion }}</a>
-                  </div>
+                    <a class="pointer" *ngFor="let item of data.listTallas" [ngClass]="{selecciono: item.check}"
+                      (click)="this.pedido.talla = item.tal_descripcion; item.check = !item.check">{{ item.tal_descripcion }}</a>
+                  </div>-->
                   <!-- <h4>Color</h4>
                      <div class="aa-color-tag">
                        <a href="#" class="aa-color-green"></a>
@@ -77,9 +77,13 @@
                   <div class="aa-prod-view-bottom">
                     <a (click)="AgregarCart()" class="aa-add-to-cart-btn pointer"><span
                         class="fa fa-shopping-cart"></span>Agregar al Carrito</a>
-                    <a class="aa-add-to-cart-btn"
+                    <!--<a class="aa-add-to-cart-btn"
                       href="https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&u=https://www.locomproaqui.com/productos/15?u=https://www.locomproaqui.com/productos/{{ this.data.id }}"
-                      target="_blank">Compartir</a>
+                      target="_blank">Compartir</a>-->
+                      <a (click)="comprarArticulo( )" class="aa-add-to-cart-btn pointer"><span
+                        class="fa fab fa-whatsapp"></span>Comprar</a>
+                    <a (click)="masInfo( data )" class="aa-add-to-cart-btn pointer"><span
+                      class="fa fab fa-whatsapp"></span>Pedir Informacion</a>
                   </div>
                 </div>
               </div>
@@ -96,7 +100,7 @@
             <!-- Tab panes -->
             <div class="container">
               <div *ngIf="view == 'descripcion'">
-                <p [innerHtml]="data.pro_descripcion"></p>
+                <h5 [innerHtml]="data.pro_descripcion"></h5>
               </div>
               <div *ngIf="view == 'comentarios'">
                 <div class="aa-product-review-area">
@@ -106,11 +110,11 @@
                       <div class="media">
                         <div class="media-left">
                           <a href="#">
-                            <img class="media-object" src="img/testimonial-img-3.jpg" alt="girl image">
+                            <img class="media-object" src="./assets/noimagen.jpg" alt="girl image">
                           </a>
                         </div>
                         <div class="media-body">
-                          <h4 class="media-heading"><strong>Marla Jobs</strong> - <span>March 26, 2016</span></h4>
+                          <h4 class="media-heading"><strong>Antonio</strong> - <span>Marzo 26, 2020</span></h4>
                           <div class="aa-product-rating">
                             <span class="fa fa-star"></span>
                             <span class="fa fa-star"></span>
@@ -118,7 +122,7 @@
                             <span class="fa fa-star"></span>
                             <span class="fa fa-star-o"></span>
                           </div>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                          <p>Producto genial muy util y facil de usar.</p>
                         </div>
                       </div>
                     </li>
@@ -126,11 +130,11 @@
                       <div class="media">
                         <div class="media-left">
                           <a href="#">
-                            <img class="media-object" src="img/testimonial-img-3.jpg" alt="girl image">
+                            <img class="media-object" src="./assets/noimagen.jpg" alt="girl image">
                           </a>
                         </div>
                         <div class="media-body">
-                          <h4 class="media-heading"><strong>Marla Jobs</strong> - <span>March 26, 2016</span></h4>
+                          <h4 class="media-heading"><strong>Carlos montaño</strong> - <span>Enero 20, 2020</span></h4>
                           <div class="aa-product-rating">
                             <span class="fa fa-star"></span>
                             <span class="fa fa-star"></span>
@@ -138,14 +142,14 @@
                             <span class="fa fa-star"></span>
                             <span class="fa fa-star-o"></span>
                           </div>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                          <p>me siento mucho mejor este producto cambio mi vida</p>
                         </div>
                       </div>
                     </li>
                   </ul>
                   <h4>Add a review</h4>
                   <div class="aa-your-rating">
-                    <p>Your Rating</p>
+                    <p>Agregar Nota</p>
                     <a href="#"><span class="fa fa-star-o"></span></a>
                     <a href="#"><span class="fa fa-star-o"></span></a>
                     <a href="#"><span class="fa fa-star-o"></span></a>
@@ -155,11 +159,11 @@
                   <!-- review form -->
                   <form action="" class="aa-review-form">
                     <div class="form-group">
-                      <label for="message">Your Review</label>
+                      <label for="message">Ranking</label>
                       <textarea class="form-control" rows="3" id="message"></textarea>
                     </div>
                     <div class="form-group">
-                      <label for="name">Name</label>
+                      <label for="name">Nombre</label>
                       <input type="text" class="form-control" id="name" placeholder="Name">
                     </div>
                     <div class="form-group">
@@ -167,7 +171,7 @@
                       <input type="email" class="form-control" id="email" placeholder="example@gmail.com">
                     </div>
 
-                    <button type="submit" class="btn btn-default aa-review-submit">Submit</button>
+                    <button type="submit" class="btn btn-default aa-review-submit">Enviar</button>
                   </form>
                 </div>
               </div>
@@ -179,6 +183,30 @@
             <ul class="aa-product-catg aa-related-item-slider">
               <!-- start single product item -->
               <ng-image-slider [images]="imageObject" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
+                  [showArrow]="sliderArrowShow" [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
+                  [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage"
+                  [animationSpeed]="sliderAnimationSpeed" (imageClick)="imageOnClick($event)"
+                  (arrowClick)="arrowOnClick($event)" (lightboxArrowClick)="lightboxArrowClick($event)" #nav>
+                </ng-image-slider>
+            </ul>
+          </div>
+          <div class="aa-product-related-item">
+            <h3>Productos Relacionados</h3>
+            <ul class="aa-product-catg aa-related-item-slider">
+              <!-- start single product item -->
+              <ng-image-slider [images]="imageObject2" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
+                  [showArrow]="sliderArrowShow" [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
+                  [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage"
+                  [animationSpeed]="sliderAnimationSpeed" (imageClick)="imageOnClick($event)"
+                  (arrowClick)="arrowOnClick($event)" (lightboxArrowClick)="lightboxArrowClick($event)" #nav>
+                </ng-image-slider>
+            </ul>
+          </div>
+          <div class="aa-product-related-item">
+            <h3>Productos Relacionados</h3>
+            <ul class="aa-product-catg aa-related-item-slider">
+              <!-- start single product item -->
+              <ng-image-slider [images]="imageObject3" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
                   [showArrow]="sliderArrowShow" [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
                   [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage"
                   [animationSpeed]="sliderAnimationSpeed" (imageClick)="imageOnClick($event)"
