@@ -10,6 +10,7 @@ import { ProductoHistorialAction, CartAction, BuscadorAction } from 'src/app/red
 import * as _ from 'lodash';
 import { ToolsService } from 'src/app/services/tools.service';
 import { FormatosService } from 'src/app/services/formatos.service';
+import { ChecktDialogComponent } from '../checkt-dialog/checkt-dialog.component';
 
 @Component({
   selector: 'app-productos',
@@ -124,7 +125,20 @@ export class ProductosComponent implements OnInit {
   }
 
   AgregarCart(item:any){
-    let data:any = {
+    item.costo = Number( 1 ) * item.pro_uni_venta;
+    //this.AgregarCart();
+    item.cantidadAd =  1;
+    item.talla = 35;
+    const dialogRef = this.dialog.open(ChecktDialogComponent,{
+      width: '855px',
+      maxHeight: "665px",
+      data: { datos: item }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+    /*let data:any = {
       articulo: item.id,
       codigo: item.pro_codigo,
       titulo: item.pro_nombre,
@@ -137,7 +151,7 @@ export class ProductosComponent implements OnInit {
     };
     let accion = new CartAction(data, 'post');
     this._store.dispatch(accion);
-    this._tools.presentToast("Agregado al Carro");
+    this._tools.presentToast("Agregado al Carro");*/
   }
 
   codigo(){

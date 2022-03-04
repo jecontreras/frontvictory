@@ -59,21 +59,21 @@
                 <figure class="img-contenedor">
                   <a class="aa-product-img" href="#" [routerLink]="[ '/tienda/productosView', item.id ]"><img class="anchosProductos" [src]="item.foto"
                       alt="polo shirt img"></a>
-                  <a class="aa-add-card-btn pointer" (click)="AgregarCart(item)"><span
-                      class="fa fa-shopping-cart"></span>Agregar al Carro</a>
+                      <a class="aa-add-card-btn pointer" (click)="AgregarCart(item)"><span
+                        class="fa fa-shopping-cart"></span>Comprar y pagar en casa Envio Gratis</a>
                   <figcaption>
                     <h4 class="aa-product-title"><a href="#">{{ item.pro_nombre }}</a></h4>
                     <span class="aa-product-price">{{ _formato.monedaChange( 3, 2, item.pro_uni_venta ) }}</span><span
                       class="aa-product-price"><del>{{ _formato.monedaChange( 3, 2, item.pro_uni_venta*2 ) }}</del></span>
                   </figcaption>
                 </figure>
-                <div class="aa-product-hvr-content">
+                <!--<div class="aa-product-hvr-content">
                   <a href="https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&u=https://www.locomproaqui.com/productos/15?u=https://www.locomproaqui.com/productos/{{ item.id }}"
                     target="_blank" data-toggle="tooltip" data-placement="top" title="Compartir"><span
                       class="fa fa-exchange"></span></a>
                   <a class="pointer" (click)="viewProducto( item )" title="Ver Producto"><span
                       class="fa fa-search"></span></a>
-                </div>
+                </div>-->
                 <!-- product badge -->
                 <span class="aa-badge aa-sale" href="#">SALE!</span>
               </li>

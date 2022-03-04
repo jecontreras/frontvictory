@@ -30,10 +30,15 @@
                 <div class="aa-product-view-slider">
                   <div id="demo-1" class="simpleLens-gallery-container">
                     <div class="simpleLens-container">
-                      <lib-ngx-image-zoom [thumbImage]=data.foto [fullImage]=data.foto [magnification]="1"
+                      <lib-ngx-image-zoom [thumbImage]=viewsImagen [fullImage]=viewsImagen [magnification]="1"
                         [enableScrollZoom]="true" [enableLens]="true" [lensWidth]="200" [lensHeight]="200">
                       </lib-ngx-image-zoom>
                     </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-2" *ngFor="let item of listGaleria" (click)="verImagen( item.pri_imagen )">
+                    <img [src]="item.pri_imagen" alt="" style="width: 120%; border-radius: 11px;">
                   </div>
                 </div>
               </div>
@@ -46,11 +51,13 @@
                     <p class="aa-product-avilability">Disponibilidad: <span>En stock</span></p>
                   </div>
                   <p [innerHtml]="data.pro_descripcion | slice: 0: rango"></p>
-                  <!--<h4>Talla</h4>
-                  <div class="aa-prod-view-size">
-                    <a class="pointer" *ngFor="let item of data.listTallas" [ngClass]="{selecciono: item.check}"
-                      (click)="this.pedido.talla = item.tal_descripcion; item.check = !item.check">{{ item.tal_descripcion }}</a>
-                  </div>-->
+                  <section *ngIf="data['listTallas']?.length > 0 ">
+                    <h4>Talla</h4>
+                    <div class="aa-prod-view-size">
+                      <a class="pointer" *ngFor="let item of data.listTallas" [ngClass]="{selecciono: item.check}"
+                        (click)="this.pedido.talla = item.tal_descripcion; item.check = !item.check">{{ item.tal_descripcion }}</a>
+                    </div>
+                  </section>
                   <!-- <h4>Color</h4>
                      <div class="aa-color-tag">
                        <a href="#" class="aa-color-green"></a>
@@ -75,8 +82,8 @@
                     </p>
                   </div>
                   <div class="aa-prod-view-bottom">
-                    <a (click)="AgregarCart()" class="aa-add-to-cart-btn pointer"><span
-                        class="fa fa-shopping-cart"></span>Agregar al Carrito</a>
+                    <!--<a (click)="AgregarCart()" class="aa-add-to-cart-btn pointer"><span
+                        class="fa fa-shopping-cart"></span>Agregar al Carrito</a>-->
                     <!--<a class="aa-add-to-cart-btn"
                       href="https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&u=https://www.locomproaqui.com/productos/15?u=https://www.locomproaqui.com/productos/{{ this.data.id }}"
                       target="_blank">Compartir</a>-->
@@ -90,31 +97,31 @@
             </div>
           </div>
           <div class="aa-product-details-bottom">
-            <div class="mx-auto" style="width: 200px;">
+            <!--<div class="mx-auto" style="width: 200px;">
               <ul class="nav nav-tabs centerAncho" id="myTab2">
                 <li><a href="#description" data-toggle="tab" (click)="this.view = 'descripcion'">Descripcion</a></li>
                 <li><a href="#review" data-toggle="tab" (click)="this.view = 'comentarios'">Comentarios</a></li>
               </ul>
-            </div>
+            </div>-->
 
             <!-- Tab panes -->
             <div class="container">
               <div *ngIf="view == 'descripcion'">
                 <h5 [innerHtml]="data.pro_descripcion"></h5>
               </div>
-              <div *ngIf="view == 'comentarios'">
+              <div >
                 <div class="aa-product-review-area">
-                  <h4>2 Reviews for T-Shirt</h4>
+                  <h4>Comentarios</h4>
                   <ul class="aa-review-nav">
-                    <li>
+                    <li *ngFor="let item of data.listComentarios ">
                       <div class="media">
                         <div class="media-left">
                           <a href="#">
-                            <img class="media-object" src="./assets/noimagen.jpg" alt="girl image">
+                            <img class="media-object" [src]="item.foto" alt="girl image">
                           </a>
                         </div>
                         <div class="media-body">
-                          <h4 class="media-heading"><strong>Antonio</strong> - <span>Marzo 26, 2020</span></h4>
+                          <h4 class="media-heading"><strong>{{ item.nombre }}</strong> - <span> {{ item.fecha }} </span></h4>
                           <div class="aa-product-rating">
                             <span class="fa fa-star"></span>
                             <span class="fa fa-star"></span>
@@ -122,57 +129,37 @@
                             <span class="fa fa-star"></span>
                             <span class="fa fa-star-o"></span>
                           </div>
-                          <p>Producto genial muy util y facil de usar.</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="media">
-                        <div class="media-left">
-                          <a href="#">
-                            <img class="media-object" src="./assets/noimagen.jpg" alt="girl image">
-                          </a>
-                        </div>
-                        <div class="media-body">
-                          <h4 class="media-heading"><strong>Carlos montaño</strong> - <span>Enero 20, 2020</span></h4>
-                          <div class="aa-product-rating">
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star-o"></span>
-                          </div>
-                          <p>me siento mucho mejor este producto cambio mi vida</p>
+                          <p>{{ item.descripcion }}</p>
                         </div>
                       </div>
                     </li>
                   </ul>
-                  <h4>Add a review</h4>
+                  <h4>Agregar Testimonios</h4>
                   <div class="aa-your-rating">
                     <p>Agregar Nota</p>
-                    <a href="#"><span class="fa fa-star-o"></span></a>
-                    <a href="#"><span class="fa fa-star-o"></span></a>
-                    <a href="#"><span class="fa fa-star-o"></span></a>
-                    <a href="#"><span class="fa fa-star-o"></span></a>
-                    <a href="#"><span class="fa fa-star-o"></span></a>
+                    <a class="pointer"><span class="fa fa-star-o"></span></a>
+                    <a class="pointer"><span class="fa fa-star-o"></span></a>
+                    <a class="pointer"><span class="fa fa-star-o"></span></a>
+                    <a class="pointer"><span class="fa fa-star-o"></span></a>
+                    <a class="pointer"><span class="fa fa-star-o"></span></a>
                   </div>
                   <!-- review form -->
-                  <form action="" class="aa-review-form">
+                  <div action="" class="aa-review-form">
                     <div class="form-group">
                       <label for="message">Ranking</label>
-                      <textarea class="form-control" rows="3" id="message"></textarea>
+                      <textarea class="form-control" rows="3" [(ngModel)]="comentario.descripcion"></textarea>
                     </div>
                     <div class="form-group">
                       <label for="name">Nombre</label>
-                      <input type="text" class="form-control" id="name" placeholder="Name">
+                      <input type="text" class="form-control" [(ngModel)]="comentario.nombre" placeholder="Name">
                     </div>
                     <div class="form-group">
                       <label for="email">Email</label>
-                      <input type="email" class="form-control" id="email" placeholder="example@gmail.com">
+                      <input type="email" class="form-control" [(ngModel)]="comentario.email" placeholder="example@gmail.com">
                     </div>
 
-                    <button type="submit" class="btn btn-default aa-review-submit">Enviar</button>
-                  </form>
+                    <button type="submit" class="btn btn-default aa-review-submit" (click)="guardarComentario()">Enviar</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -191,7 +178,7 @@
             </ul>
           </div>
           <div class="aa-product-related-item">
-            <h3>Productos Relacionados</h3>
+            <h3>Productos Mas Vendidos</h3>
             <ul class="aa-product-catg aa-related-item-slider">
               <!-- start single product item -->
               <ng-image-slider [images]="imageObject2" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
@@ -203,7 +190,7 @@
             </ul>
           </div>
           <div class="aa-product-related-item">
-            <h3>Productos Relacionados</h3>
+            <h3>Productos Con buena reseña</h3>
             <ul class="aa-product-catg aa-related-item-slider">
               <!-- start single product item -->
               <ng-image-slider [images]="imageObject3" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"

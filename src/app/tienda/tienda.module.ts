@@ -18,11 +18,12 @@ import { NgImageSliderModule } from 'ng-image-slider';
 import { ChecktComponent } from './checkt/checkt.component';
 import { CarritoComponent } from './carrito/carrito.component';
 import { CompletarComponent } from './completar/completar.component';
+import { ChecktDialogComponent } from './checkt-dialog/checkt-dialog.component';
 
 
 @NgModule({
-  entryComponents: [ InfoProductoComponent ],
-  declarations: [MainsComponent, TiendaComponent, ProductosComponent, FooterComponent, MenuComponent, InfoProductoComponent, ProductosViewComponent, ContactoComponent, ChecktComponent, CarritoComponent, CompletarComponent],
+  entryComponents: [ InfoProductoComponent,ChecktDialogComponent ],
+  declarations: [MainsComponent, TiendaComponent, ProductosComponent, FooterComponent, MenuComponent, InfoProductoComponent, ProductosViewComponent, ContactoComponent, ChecktComponent, CarritoComponent, CompletarComponent, ChecktDialogComponent],
   imports: [
     TiendaRoutingModule,
     CommonModule,

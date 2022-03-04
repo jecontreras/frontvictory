@@ -23,7 +23,8 @@
                             <thead>
                                 <tr>
                                     <th scope="col" style="width: 10%;">Foto</th>
-                                    <th scope="col" style="width: 80%;">Productos</th>
+                                    <th scope="col" style="width: 50%;">Productos</th>
+                                    <th scope="col" style="width: 30%;">Descripcion</th>
                                     <th scope="col">Precio</th>
                                     <th scope="col">Cantidad</th>
                                     <th scope="col">Total</th>
@@ -44,6 +45,9 @@
                                         <br>
                                         <button type="button" (click)="borrar( idx, item )"
                                             class="btn btn-danger">Borrar</button>
+                                    </td>
+                                    <td>
+                                        <textarea class="form-control" [(ngModel)]="item.descripcion" (change)="updateCart( item )" (blur)="updateCart( item )" rows="3"></textarea>
                                     </td>
                                     <td>{{ _tools.monedaChange( 3, 2, item.costo || 0 ) }}</td>
                                     <td>{{ item.cantidad }}</td>

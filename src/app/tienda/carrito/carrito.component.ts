@@ -34,6 +34,11 @@ export class CarritoComponent implements OnInit {
     for( let row of this.listCarrito ) this.totalSuma+= row.costoTotal
   }
 
+  updateCart( item:any ){
+    let accion = new CartAction( item, 'put');
+    this._store.dispatch( accion );
+  }
+
   borrar( idx:any, item:any ){
     this.listCarrito.splice(idx, 1);
     let accion = new CartAction(item, 'delete');

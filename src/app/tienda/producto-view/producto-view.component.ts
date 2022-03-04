@@ -11,6 +11,8 @@ import { MatDialog } from '@angular/material';
 import { InfoProductoComponent } from '../info-producto/info-producto.component';
 import { NgImageSliderComponent } from 'ng-image-slider';
 import { FormatosService } from 'src/app/services/formatos.service';
+import * as moment from 'moment';
+import { ChecktDialogComponent } from '../checkt-dialog/checkt-dialog.component';
 
 @Component({
   selector: 'app-producto-view',
@@ -20,7 +22,9 @@ import { FormatosService } from 'src/app/services/formatos.service';
 export class ProductosViewComponent implements OnInit {
 
   id:any;
-  data:any = {};
+  data:any = {
+    listComentarios: []
+  };
   pedido:any = { cantidad:1 };
   view:string = "descripcion";
   rango:number = 250;
@@ -37,7 +41,7 @@ export class ProductosViewComponent implements OnInit {
   notscrolly:boolean=true;
   listProductosHistorial:any = [];
   tiendaInfo:any = {};
-
+  comentario:any = {};
   imageObject:any = [
     {
       image: "./assets/imagenes/1920x700.png",
@@ -82,6 +86,8 @@ export class ProductosViewComponent implements OnInit {
   userId:any = {};
   dataUser:any = {};
   urlwhat:string
+  listGaleria:any = [];
+  viewsImagen:string;
 
   constructor(
     private _store: Store<CART>,
@@ -113,13 +119,18 @@ export class ProductosViewComponent implements OnInit {
   }
 
   getProducto(){
-    this._producto.get({ where: { id: this.id}}).subscribe((res:any)=>{ this.data = res.data[0] || {}; }, error=> { console.error(error); this._tools.presentToast('Error de servidor'); });
+    this._producto.get({ where: { id: this.id}}).subscribe((res:any)=>{ this.data = res.data[0] || {}; this.viewsImagen = this.data.foto; if( !this.data.listComentarios[0] ) this.data.listComentarios = []; this.listGaleria = this.data.galeria || []; this.listGaleria.push( { id: 1000, pri_imagen: this.data.foto }) }, error=> { console.error(error); this._tools.presentToast('Error de servidor'); });
+  }
+
+  verImagen( img:string ){
+    this.viewsImagen = img;
   }
 
   async getProductos(){
     this.query = {
       where:{
-        pro_activo: 0
+        pro_activo: 0,
+        codigo: this.data.codigo
       },
       page: 0,
       limit: 20
@@ -297,13 +308,43 @@ export class ProductosViewComponent implements OnInit {
     window.open(this.urlwhat);
   }
 
+  guardarComentario(){
+    this._producto.createTestimonio( {
+      descripcion: this.comentario.descripcion,
+      nombre: this.comentario.nombre,
+      email: this.comentario.email,
+      productos: this.data.id
+    }).subscribe(( res:any )=>{
+      this._tools.tooast( { title: "Comentario creado" } );
+      this.comentario = {};
+      this.data.listComentarios.push( {
+        nombre: res.nombre,
+        fecha:  moment( res.createdAt ).format("DD/MM/YYYY"),
+        descripcion: res.descripcion,
+        posicion: _.random(0, 10),
+        foto: "./assets/noimagen.jpg"
+      } );
+    },()=> this._tools.tooast( { title: "Error al crear el Comentario" } ) );
+  }
+
   comprarArticulo( ){
-    this.AgregarCart();
-    this.Router.navigate( ['tienda/carrito'] );
+    this.suma();
+    //this.AgregarCart();
+    this.data.cantidadAd = this.pedido.cantidad || 1;
+    this.data.talla = this.pedido.talla || 0;
+    const dialogRef = this.dialog.open(ChecktDialogComponent,{
+      width: '855px',
+      maxHeight: "665px",
+      data: { datos: this.data }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   validarNumero(){
-    return this.tiendaInfo.numeroCelular || "3208429429";
+    return this.tiendaInfo.numeroCelular || "3156027551";
   }
 
 
