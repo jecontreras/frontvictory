@@ -327,11 +327,12 @@ export class ProductosViewComponent implements OnInit {
     },()=> this._tools.tooast( { title: "Error al crear el Comentario" } ) );
   }
 
-  comprarArticulo( ){
+  comprarArticulo( cantidad:number, opt ){
     this.suma();
     //this.AgregarCart();
-    this.data.cantidadAd = this.pedido.cantidad || 1;
-    this.data.talla = this.pedido.talla || 0;
+    this.data.cantidadAd = opt == true ? cantidad : this.pedido.cantidad || cantidad;
+    this.data.talla = this.pedido.talla;
+    this.data.opt = opt;
     const dialogRef = this.dialog.open(ChecktDialogComponent,{
       width: '855px',
       maxHeight: "665px",

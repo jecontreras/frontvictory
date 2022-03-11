@@ -3,7 +3,7 @@
 </h2>
 
 <mat-dialog-content class="mat-typography">
-    <div class="form row">
+    <div class="form row" *ngIf="!data.id">
         <div class="col-12">
             <p>
                 &nbsp;<img class="tyslo-image" data-v-7cfc0e7c="" height="60"
@@ -39,14 +39,15 @@
                                 style="box-sizing: border-box; color: #0d6efd;" target="_blank">
                                 <div class="product-title" data-v-7cfc0e7c=""
                                     style="-webkit-box-orient: vertical; -webkit-line-clamp: 2; box-sizing: border-box; display: -webkit-box; line-height: 1.2; max-height: 2.4em; overflow: hidden; text-overflow: ellipsis;">
-                                    {{ datas.pro_nombre  || 'diesel color negro' }}
+                                    {{ datas.pro_nombre || 'diesel color negro' }}
                                 </div>
                             </a><small class="product-title variant" data-v-7cfc0e7c=""
                                 style="-webkit-box-orient: vertical; -webkit-line-clamp: 2; box-sizing: border-box; color: black; display: -webkit-box; font-size: 0.875em; line-height: 1.2; max-height: 2.4em; overflow: hidden; text-overflow: ellipsis;"></small>
                         </div>
                         <div class="line-price text-end align-items-center" data-v-7cfc0e7c=""
                             style="align-items: center !important; box-sizing: border-box; color: black; margin: 0px 10px; text-align: right !important;">
-                            <span data-v-7cfc0e7c="" style="box-sizing: border-box;">{{ _tools.monedaChange( 3,2,this.datas.pro_uni_venta || 0 ) }}</span>
+                            <span data-v-7cfc0e7c="" style="box-sizing: border-box;">{{ _tools.monedaChange(
+                                3,2,this.datas.pro_uni_venta || 0 ) }}</span>
                         </div>
                         <span class="flex-shrink-1 close" data-v-7cfc0e7c=""
                             style="box-sizing: border-box; color: #aaaaaa; flex-shrink: 1 !important; font-size: 20px; font-weight: 700; margin: 0px 10px;">×</span>
@@ -68,7 +69,38 @@
                                 Subtotal
                             </div>
                             <div class="label-value" data-v-2b9a7796="" style="box-sizing: border-box;">
-                                <span data-v-2b9a7796="" style="box-sizing: border-box;">{{ _tools.monedaChange( 3,2,this.datas.pro_uni_venta || 0 ) }}</span>
+                                <span data-v-2b9a7796="" style="box-sizing: border-box;">{{ _tools.monedaChange(
+                                    3,2,this.data.costo || 0 ) }}</span>
+                            </div>
+                        </div>
+                        <div class="
+                        d-flex
+                        justify-content-between
+                        my-1
+                        total-row
+                        align-items-baseline
+                        fw-bold
+                      " data-v-2b9a7796=""
+                            style="align-items: baseline !important; border-top: 1px solid rgba(175, 175, 175, 0.34) !important; box-sizing: border-box; display: flex !important; font-weight: 700 !important; justify-content: space-between !important; margin-bottom: 0.25rem !important; margin-top: 0.25rem !important;">
+                            <div data-v-2b9a7796="" style="box-sizing: border-box;">Cantidad</div>
+                            <div class="total-value" data-v-2b9a7796=""
+                                style="box-sizing: border-box; font-size: 20px;">
+                                <span data-v-2b9a7796="" style="box-sizing: border-box;">{{ data.cantidadAd || 1 }}</span>
+                            </div>
+                        </div>
+                        <div class="
+                        d-flex
+                        justify-content-between
+                        my-1
+                        total-row
+                        align-items-baseline
+                        fw-bold
+                      " data-v-2b9a7796=""
+                            style="align-items: baseline !important; border-top: 1px solid rgba(175, 175, 175, 0.34) !important; box-sizing: border-box; display: flex !important; font-weight: 700 !important; justify-content: space-between !important; margin-bottom: 0.25rem !important; margin-top: 0.25rem !important;">
+                            <div data-v-2b9a7796="" style="box-sizing: border-box;">Envio</div>
+                            <div class="total-value" data-v-2b9a7796=""
+                                style="box-sizing: border-box; font-size: 20px;">
+                                <span data-v-2b9a7796="" style="box-sizing: border-box;">Gratis contra entrega</span>
                             </div>
                         </div>
                         <div class="
@@ -83,7 +115,8 @@
                             <div data-v-2b9a7796="" style="box-sizing: border-box;">Total</div>
                             <div class="total-value" data-v-2b9a7796=""
                                 style="box-sizing: border-box; font-size: 20px;">
-                                <span data-v-2b9a7796="" style="box-sizing: border-box;">{{ _tools.monedaChange( 3,2,this.datas.costo || 0 ) }}</span>
+                                <span data-v-2b9a7796="" style="box-sizing: border-box;">{{ _tools.monedaChange(
+                                    3,2,this.data.costo || 0 ) }}</span>
                             </div>
                         </div>
                     </div>
@@ -94,39 +127,59 @@
         <div class="form-group col-12">
             <label for="exampleFormControlInput1">Nombre y apellido</label>
             <input type="text" [(ngModel)]="data.nombre" class="form-control form-control-sm"
-                placeholder="Nombre y apellido">
+                placeholder="Nombre y apellido" required>
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Cedula</label>
+            <input type="text" [(ngModel)]="data.cedula" class="form-control form-control-sm"
+                placeholder="Es necesario tu cedula para llenar la informacion de la guia" required>
         </div>
         <div class="form-group col-12">
             <label for="exampleFormControlInput1">Numero de Telefono</label>
             <input type="text" [(ngModel)]="data.telefono" class="form-control form-control-sm"
-                placeholder="Numero telefono">
+                placeholder="Numero telefono" required>
         </div>
         <div class="form-group col-12">
             <label for="exampleFormControlInput1">Dirección de Entrega</label>
             <input type="text" [(ngModel)]="data.direccion" class="form-control form-control-sm"
-                placeholder="Direccion de entrega">
+                placeholder="Direccion de entrega" required>
         </div>
         <div class="form-group col-12">
             <label for="exampleFormControlInput1">Ciudad o municipio</label>
             <input type="text" [(ngModel)]="data.ciudad" class="form-control form-control-sm"
-                placeholder="Ciudad o municipio">
+                placeholder="Ciudad o municipio" required>
         </div>
         <div class="form-group col-12">
             <label for="exampleFormControlInput1">Barrio o localidad</label>
             <input type="text" [(ngModel)]="data.barrio" class="form-control form-control-sm"
-                placeholder="Barrio o localidad">
+                placeholder="Barrio o localidad" required>
         </div>
         <div class="form-group col-12">
             <label for="exampleFormControlInput1">Talla</label>
             <input type="text" [(ngModel)]="data.talla" class="form-control form-control-sm"
-                placeholder="talla del producto">
+                placeholder="talla del producto" required>
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Cantidad</label>
+            <input type="text" [(ngModel)]="data.cantidadAd" class="form-control form-control-sm" (change)="suma()"
+                placeholder="Cantidad de producto" required [disabled]="data.opt">
+        </div>
+    </div>
+    <div class="form row" *ngIf="data.id">
+        <div class="col-12">
+            <div class="d-flex justify-content-center">
+                <div>
+                    <h3>Chatear con un asesor sobre la venta realizada</h3>
+                    <img src="./assets/icons/whatsapp.png" style="width: 100%;" alt="" (click)="mensajeWhat()">
+                </div>
+            </div>
         </div>
     </div>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cerrar</button>
-    <button mat-button cdkFocusInitial (click)="finalizando()">
+    <button mat-button cdkFocusInitial (click)="finalizando()" *ngIf="!data.id">
         <span>Confirmar Compra</span>
     </button>
 </mat-dialog-actions>
