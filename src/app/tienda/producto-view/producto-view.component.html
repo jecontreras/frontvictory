@@ -92,7 +92,7 @@
                     <a (click)="comprarArticulo( 1, false )" class="aa-add-to-cart-btn pointer"
                       style="    font-size: 280%; background: #008116; color: white; border-radius: 11px;"><span
                         class="fa fab fa-whatsapp"></span>Comprar y pagar en casa</a>
-                        <h2 class="text-success">
+                        <h2 class="text-success" *ngIf="data['pro_categoria']?.id == 16">
                           <a (click)="comprarArticulo( 2, true )" class="aa-add-to-cart-btn pointer"
                           style="font-size: 130%; background: #fbff00; color: #212529; border-radius: 11px;"><span
                             class="fa fab fa-whatsapp"></span>
@@ -127,13 +127,13 @@
                     <div class="col-12">
                       <img src="./assets/img/compra.jpg" style="width: 100%;">
                     </div>
-                    <div class="col-12">
+                    <div class="col-12" *ngIf="data['pro_categoria']?.pro_categoria == 16">
                       <h5> 🚚 ENVIO GRATIS Y PAGAS CUANDO RECIBES EL PRODUCTO 🚚
                         Nuestro tallaje es nacional, un poco pequeño sugerimos solicitar una talla más a la que te de en
                         la siguiente tabla
                       </h5>
                     </div>
-                    <div class="col-12">
+                    <div class="col-12" *ngIf="data['pro_categoria']?.id == 16">
                       <img src="./assets/img/tallas.jpg" style="width: 100%;">
                     </div>
                   </div>

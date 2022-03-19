@@ -4,6 +4,7 @@ import { ProductoViewComponent } from './components/producto-view/producto-view.
 import { LoginsComponent } from './layout/login/login.component';
 import { RegistrosComponent } from './layout/registro/registro.component';
 import { PedidosComponent } from './dashboard-config/components/pedidos/pedidos.component';
+import { ProductosComponent } from './tienda/productos/productos.component';
 
 
 const routes: Routes = [

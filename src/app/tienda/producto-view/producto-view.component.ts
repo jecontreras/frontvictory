@@ -116,6 +116,7 @@ export class ProductosViewComponent implements OnInit {
       this.getProducto();
       this.getProductos();
     }
+    window.document.scrollingElement.scrollTop=0
   }
 
   getProducto(){
@@ -333,9 +334,10 @@ export class ProductosViewComponent implements OnInit {
     this.data.cantidadAd = opt == true ? cantidad : this.pedido.cantidad || cantidad;
     this.data.talla = this.pedido.talla;
     this.data.opt = opt;
+    this.data.foto = this.viewsImagen;
     const dialogRef = this.dialog.open(ChecktDialogComponent,{
-      width: '855px',
-      maxHeight: "665px",
+      //width: '855px',
+      //maxHeight: "665px",
       data: { datos: this.data }
     });
 

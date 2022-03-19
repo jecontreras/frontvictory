@@ -7,6 +7,7 @@ import { ProductosViewComponent } from './producto-view/producto-view.component'
 import { ContactoComponent } from './contacto/contacto.component';
 import { CarritoComponent } from './carrito/carrito.component';
 import { ChecktComponent } from './checkt/checkt.component';
+import { DetallePedidoComponent } from './detalle-pedido/detalle-pedido.component';
 
 
 const routes: Routes = [
@@ -42,6 +43,10 @@ const routes: Routes = [
             path: 'checkouts',
             component: ChecktComponent
           },
+          {
+            path: 'detallepedido',
+            component: DetallePedidoComponent
+          }
         ]
       },
       // {

@@ -26,15 +26,16 @@ export class ProductosComponent implements OnInit {
       //pro_categoria: { '!=' : [2,3,12] }
     },
     page: 0,
-    limit: 15
+    limit: 10
   };
+  
   listCategorias:any = [];
   dataSeleccionda:string;
   listProductosHistorial: any = [];
   listProductosRecomendar: any = [];
 
   seartxt:string = '';
-  loader:boolean = false;
+  loader:boolean = true;
   notscrolly:boolean=true;
   notEmptyPost:boolean = true;
   busqueda:any = {};
@@ -95,6 +96,7 @@ export class ProductosComponent implements OnInit {
     this.spinner.show();
     this._productos.get(this.query).subscribe((res:any)=>{ 
       this.listProductos = _.unionBy(this.listProductos || [], res.data, 'id');
+      console.log("******",res)
       this.spinner.hide();
       this.loader = false;
       if (res.data.length === 0 ) {

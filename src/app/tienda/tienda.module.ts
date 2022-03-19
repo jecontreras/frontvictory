@@ -19,11 +19,12 @@ import { ChecktComponent } from './checkt/checkt.component';
 import { CarritoComponent } from './carrito/carrito.component';
 import { CompletarComponent } from './completar/completar.component';
 import { ChecktDialogComponent } from './checkt-dialog/checkt-dialog.component';
+import { DetallePedidoComponent } from './detalle-pedido/detalle-pedido.component';
 
 
 @NgModule({
   entryComponents: [ InfoProductoComponent,ChecktDialogComponent ],
-  declarations: [MainsComponent, TiendaComponent, ProductosComponent, FooterComponent, MenuComponent, InfoProductoComponent, ProductosViewComponent, ContactoComponent, ChecktComponent, CarritoComponent, CompletarComponent, ChecktDialogComponent],
+  declarations: [MainsComponent, TiendaComponent, ProductosComponent, FooterComponent, MenuComponent, InfoProductoComponent, ProductosViewComponent, ContactoComponent, ChecktComponent, CarritoComponent, CompletarComponent, ChecktDialogComponent, DetallePedidoComponent],
   imports: [
     TiendaRoutingModule,
     CommonModule,

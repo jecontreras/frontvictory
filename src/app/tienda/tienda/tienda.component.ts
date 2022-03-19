@@ -104,31 +104,35 @@ export class TiendaComponent implements OnInit {
   }
 
   armandoSlider(){
-    if(this.tiendaInfo.foto1.length > 0 ) this.imageObject = [];
-    for( let row of this.tiendaInfo.foto1 ){
-      this.imageObject.unshift(
-        {
-          image: row.foto,
-          thumbImage: row.foto,
-          alt: '',
-          check: true,
-          id: this.codigo(),
-          title: row.titulo
-        }
-      );
-    }
-    if(this.tiendaInfo.foto2.length > 0 ) this.imageObject2 = [];
-    for( let row of this.tiendaInfo.foto2 ){
-      this.imageObject2.unshift(
-        {
-          image: row.foto,
-          thumbImage: row.foto,
-          alt: '',
-          check: true,
-          id: this.codigo(),
-          title: row.titulo
-        }
-      );
+    try {
+      if(this.tiendaInfo.foto1.length > 0 ) this.imageObject = [];
+      for( let row of this.tiendaInfo.foto1 ){
+        this.imageObject.unshift(
+          {
+            image: row.foto,
+            thumbImage: row.foto,
+            alt: '',
+            check: true,
+            id: this.codigo(),
+            title: row.titulo
+          }
+        );
+      }
+      if(this.tiendaInfo.foto2.length > 0 ) this.imageObject2 = [];
+      for( let row of this.tiendaInfo.foto2 ){
+        this.imageObject2.unshift(
+          {
+            image: row.foto,
+            thumbImage: row.foto,
+            alt: '',
+            check: true,
+            id: this.codigo(),
+            title: row.titulo
+          }
+        );
+      } 
+    } catch (error) {
+      
     }
   }
 

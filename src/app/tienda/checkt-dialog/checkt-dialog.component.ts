@@ -1,7 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import * as moment from 'moment';
+import { STORAGES } from 'src/app/interfaces/sotarage';
+import { UserAction } from 'src/app/redux/app.actions';
 import { ToolsService } from 'src/app/services/tools.service';
+import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import { VentasService } from 'src/app/servicesComponents/ventas.service';
 
 @Component({
@@ -13,13 +18,23 @@ export class ChecktDialogComponent implements OnInit {
   data:any = {};
   disabled:boolean = false;
   valor:number = 0;
+  dataUser:any = {};
 
   constructor(
     public dialogRef: MatDialogRef<ChecktDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
     public _tools: ToolsService,
-    private _ventas: VentasService
-  ) { }
+    private _ventas: VentasService,
+    private _user: UsuariosService,
+    private _router: Router,
+    private _store: Store<STORAGES>,
+  ) { 
+    this._store.subscribe((store: any) => {
+      store = store.name;
+      if( !store ) return false;
+      this.dataUser = store.user || {};
+    });
+  }
 
   ngOnInit(): void {
     console.log( this.datas );
@@ -59,13 +74,61 @@ export class ChecktDialogComponent implements OnInit {
       "departamento": this.data.departamento || '',
       "ven_imagen_producto": this.datas.foto
     };
+    await this.crearUser();
+    data.usu_clave_int = this.dataUser.id;
     await this.nexCompra( data );
     this.disabled = false;
     this._tools.presentToast("Exitoso Tu pedido esta en proceso. un accesor se pondra en contacto contigo!");
     setTimeout(()=>this._tools.tooast( { title: "Tu pedido esta siendo procesado "}) ,3000);
     this.mensajeWhat();
-    
+    this._router.navigate(['/tienda/detallepedido']);
     //this.dialogRef.close('creo');
+
+  }
+
+  async crearUser(){
+    let filtro = await this.validandoUser( this.data.cedula );
+    if( filtro ) { return false; }
+    let data:any = {
+      usu_clave: this.data.cedula,
+      usu_confir: this.data.cedula,
+      usu_usuario: this.data.cedula,
+      usu_email: this.data.cedula,
+      usu_nombre: this.data.nombre,
+      usu_documento: this.data.cedula
+    };
+    let result = await this.creandoUser( data );
+    console.log("********", result);
+    if( !result ) return false;
+    return true;
+  }
+
+  validandoUser( documento:any ){
+    return new Promise( resolve => {
+      this._user.get( { where: { usu_documento: documento } } ).subscribe( ( res:any )=> {
+        res = res.data[0];
+        if( !res ) resolve( false );
+        let accion:any = new UserAction( res , 'post' );
+        this._store.dispatch( accion );
+        this.urlRotulado();
+        resolve( true );
+      });
+    });
+  }
+
+  creandoUser( data:any ){
+    return new Promise( resolve => {
+      this._user.create( data ).subscribe( ( res:any )=> {
+        if( !res.success ) { resolve ( false ) }
+        let accion:any = new UserAction( res.data , 'post' );
+        this._store.dispatch( accion );
+        this.urlRotulado();
+        resolve( true );
+      });
+    });
+  }
+
+  urlRotulado(){
 
   }
 
