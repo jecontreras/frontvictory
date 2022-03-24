@@ -6,6 +6,9 @@ import { CartAction, BuscadorAction } from 'src/app/redux/app.actions';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { ToolsService } from 'src/app/services/tools.service';
+import  { SocialAuthService, FacebookLoginProvider, SocialUser }  from 'angularx-social-login';
+import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
+
 declare var ePayco: any;
 
 const URLFRONT = environment.urlFront;
@@ -33,6 +36,9 @@ export class MenuComponent implements OnInit {
   tiendaInfo:any = {};
   disableBtn:boolean = false;
   texto:string; 
+  
+  socialUser: SocialUser;
+  isLoggedin: boolean = null;
 
   constructor(
     public media: MediaMatcher,
@@ -40,6 +46,8 @@ export class MenuComponent implements OnInit {
     private _store: Store<CART>,
     private Router: Router,
     private _tools: ToolsService,
+    private socialAuthService: SocialAuthService,
+    private _user: UsuariosService
   ) { 
     this._store.subscribe((store: any) => {
       //console.log(store);
@@ -59,7 +67,24 @@ export class MenuComponent implements OnInit {
     this.mobileQuery.addListener(this._mobileQueryListener);
     // tslint:disable-next-line:no-unused-expression
     this.mobileQuery.ds;
+    this.socialAuthService.authState.subscribe( async (user) => {
+      let result = await this._user.initProcess( user );
+      console.log("**********", user, result )
+      this.socialUser = user;
+      this.isLoggedin = (user != null);
+      }
+    );
   }
+
+  loginWithFacebook(): void {
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+  }
+
+
+  signOut(): void {
+    this.socialAuthService.signOut();
+  }
+
   deleteCart(idx:any, item:any){
     this.listCart.splice(idx, 1);
     let accion = new CartAction(item, 'delete');

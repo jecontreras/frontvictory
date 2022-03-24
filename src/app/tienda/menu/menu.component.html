@@ -135,6 +135,7 @@
                         <li><a href="#" [routerLink]="['/tienda/inicio']">Inicio</a></li>
                         <li><a href="#" [routerLink]="[ '/tienda/productos' ]">Catálogo</a></li>
                         <li><a href="#" [routerLink]="[ '/tienda/detallepedido' ]" *ngIf="dataUser.id">Mis Pedidos</a></li>
+                        <li><a (click)="loginWithFacebook()" class="pointer" >Login Facebook</a></li>
                         <!--<li><a href="#" *ngIf="!dataUser.id" [routerLink]="[ '/login' ]">Inicar Seccion</a></li>-->
                         <!--<li><a href="#" *ngIf="dataUser.id" [routerLink]="[ '/config/pedidos' ]">Admin</a></li>-->
                         <!--<li><a href="#" *ngIf="!dataUser.id" [routerLink]="[ '/registro' ]">Registrarse</a></li>-->

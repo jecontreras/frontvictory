@@ -28,6 +28,7 @@ import { NgxImageZoomModule } from 'ngx-image-zoom';
 import { LoginsComponent } from './layout/login/login.component';
 import { RegistrosComponent } from './layout/registro/registro.component';
 import { TerminosComponent } from './layout/terminos/terminos.component';
+import  { FacebookLoginProvider, GoogleLoginProvider, SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 
 @NgModule({
   entryComponents:[
@@ -59,6 +60,7 @@ import { TerminosComponent } from './layout/terminos/terminos.component';
     NgImageSliderModule,
     ConfigModule,
     NgxImageZoomModule,
+    SocialLoginModule,
     StoreModule.forRoot({ name: appReducer }),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
@@ -71,7 +73,31 @@ import { TerminosComponent } from './layout/terminos/terminos.component';
     RegistroComponent,
     MenuLateralComponent
   ],
-  providers: [],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              'clientId'
+            )
+          },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider(
+              '257894275306451'
+            )
+          }
+        ],
+        onError: (err) => {
+          console.error(err);
+        }
+      } as SocialAuthServiceConfig,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

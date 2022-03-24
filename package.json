@@ -26,6 +26,7 @@
     "@ngrx/store": "^8.6.0",
     "@ngrx/store-devtools": "github:ngrx/store-devtools-builds",
     "add": "^2.0.6",
+    "angularx-social-login": "^3.5.7",
     "bootstrap": "^4.4.1",
     "express": "^4.17.1",
     "firebase": "^7.9.3",
