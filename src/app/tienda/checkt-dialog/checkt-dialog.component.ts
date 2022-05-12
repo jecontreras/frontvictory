@@ -8,6 +8,7 @@ import { UserAction } from 'src/app/redux/app.actions';
 import { ToolsService } from 'src/app/services/tools.service';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import { VentasService } from 'src/app/servicesComponents/ventas.service';
+import  { SocialAuthService, FacebookLoginProvider, SocialUser }  from 'angularx-social-login';
 
 @Component({
   selector: 'app-checkt-dialog',
@@ -28,6 +29,7 @@ export class ChecktDialogComponent implements OnInit {
     private _user: UsuariosService,
     private _router: Router,
     private _store: Store<STORAGES>,
+    private socialAuthService: SocialAuthService,
   ) { 
     this._store.subscribe((store: any) => {
       store = store.name;
@@ -44,6 +46,11 @@ export class ChecktDialogComponent implements OnInit {
     this.data.costo = this.datas.costo || 105000;
     this.data.opt = this.datas.opt;
     this.suma();
+    this.socialAuthService.authState.subscribe( async (user) => {
+      let result = await this._user.initProcess( user );
+      console.log("**********", user, result )
+      }
+    );
   }
 
   async finalizando(){
@@ -177,6 +184,10 @@ export class ChecktDialogComponent implements OnInit {
         resolve( false );
       });
     })
+  }
+
+  logearFacebook(){
+    this.socialAuthService.signIn( FacebookLoginProvider.PROVIDER_ID );
   }
 
 }

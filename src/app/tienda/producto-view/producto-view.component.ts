@@ -13,8 +13,6 @@ import { NgImageSliderComponent } from 'ng-image-slider';
 import { FormatosService } from 'src/app/services/formatos.service';
 import * as moment from 'moment';
 import { ChecktDialogComponent } from '../checkt-dialog/checkt-dialog.component';
-import  { SocialAuthService, FacebookLoginProvider, SocialUser }  from 'angularx-social-login';
-import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 
 @Component({
   selector: 'app-producto-view',
@@ -100,8 +98,7 @@ export class ProductosViewComponent implements OnInit {
     private spinner: NgxSpinnerService,
     public dialog: MatDialog,
     public _formato: FormatosService,
-    private socialAuthService: SocialAuthService,
-    private _user: UsuariosService
+
   ) { 
     this._store.subscribe((store: any) => {
       console.log(store);
@@ -121,11 +118,7 @@ export class ProductosViewComponent implements OnInit {
       this.getProductos();
     }
     window.document.scrollingElement.scrollTop=0
-    this.socialAuthService.authState.subscribe( async (user) => {
-      let result = await this._user.initProcess( user );
-      console.log("**********", user, result )
-      }
-    );
+
   }
 
   getProducto(){
@@ -336,10 +329,9 @@ export class ProductosViewComponent implements OnInit {
       } );
     },()=> this._tools.tooast( { title: "Error al crear el Comentario" } ) );
   }
-
+  
   comprarArticulo( cantidad:number, opt ){
     this.suma();
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
     //this.AgregarCart();
     this.data.cantidadAd = opt == true ? cantidad : this.pedido.cantidad || cantidad;
     this.data.talla = this.pedido.talla;

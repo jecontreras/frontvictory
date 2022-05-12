@@ -47,11 +47,11 @@
                 <div class="aa-product-view-content p-3">
                   <h3>{{ data.pro_nombre }}</h3>
                   <div class="aa-price-block">
-                    <span class="aa-product-view-price">{{ _formato.monedaChange( 3, 2, data.pro_uni_venta || 0 )
+                    <span class="aa-product-view-price precio">{{ _formato.monedaChange( 3, 2, data.pro_uni_venta || 0 )
                       }}</span>
                     <p class="aa-product-avilability">Disponibilidad: <span>En stock</span></p>
                   </div>
-                  <p [innerHtml]="data.pro_descripcion | slice: 0: rango"></p>
+                  <p [innerHtml]="data.pro_descripcion "></p>
                   <section *ngIf="data['listTallas']?.length > 0 ">
                     <h4>Talla</h4>
                     <div class="aa-prod-view-size">
