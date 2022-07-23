@@ -24,7 +24,7 @@
     "@angular/service-worker": "~9.0.5",
     "@kolkov/angular-editor": "^1.1.1",
     "@ngrx/store": "^8.6.0",
-    "@ngrx/store-devtools": "github:ngrx/store-devtools-builds",
+    "@ngrx/store-devtools": "^9.2.0",
     "add": "^2.0.6",
     "angularx-social-login": "^3.5.7",
     "bootstrap": "^4.4.1",
