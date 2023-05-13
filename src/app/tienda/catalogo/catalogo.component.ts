@@ -108,18 +108,19 @@ export class CatalogoComponent implements OnInit {
     `) } `;
     window.open( this.urlWhatsapp );*/
     this.urlWhatsapp = `https://wa.me/573156027551?text=${encodeURIComponent(`
-      Hola estoy interesado en los tenis
-      nombre: ${ this.form.nombre }
-      celular: ${ this.form.celular }
-      direccion: ${ this.form.direccion }
-      ciudad: ${ this.form.ciudad }
-      foto: ${ this.urlFoto }
-      cantidad: 1,
-      Talla: ${ this.form.talla }
-      Total a pagar ${ this.data.pro_uni_venta }
-      envio: Gratis
-      ENVÍO DE 4 -8 DÍAS HÁBILES GRATIS
-      🤝Gracias por su atención y quedo pendiente para recibir por este medio la imagen de la guía de despacho`)}`;
+          DATOS DE CONFIRMACIÓN DE COMPRA:
+          Nombre: ${ this.form.nombre }
+          Celular: ${ this.form.celular }
+          Direccion: ${ this.form.direccion }
+          Ciudad: ${ this.form.ciudad }
+          Foto: ${ this.urlFoto }
+          Cantidad: 1
+          Talla: ${ this.form.talla }
+          Color: ${ this.form.color }
+          Total a pagar: ${ this.data.pro_uni_venta } (PAGO CONTRA ENTREGA)
+          Envío de 4 -8 días hábiles 
+      EN ESPERA DE LA GUÍA DE DESPACHO.
+    `)}`;
     console.log(this.urlWhatsapp);
     window.open(this.urlWhatsapp);
     let formsData:any = {
@@ -138,7 +139,8 @@ export class CatalogoComponent implements OnInit {
       "ven_precio": this.data.pro_uni_venta,
       "ven_total": this.data.pro_uni_venta || 0,
       "ven_ganancias": 0,
-      "prv_observacion": "ok la talla es " + this.form.talla,
+      "ven_observacion": "ok la talla es " + this.form.talla + " y el color " + this.form.color,
+      "nombreProducto": "ok la talla es " + this.form.talla + " y el color " + this.form.color,
       "ven_estado": 0,
       "create": moment().format("DD/MM/YYYY"),
       "apartamento": '',
