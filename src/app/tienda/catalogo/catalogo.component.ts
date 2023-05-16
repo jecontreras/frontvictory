@@ -7,7 +7,9 @@ import { CART } from 'src/app/interfaces/sotarage';
 import { ToolsService } from 'src/app/services/tools.service';
 import { ProductoService } from 'src/app/servicesComponents/producto.service';
 import { VentasService } from 'src/app/servicesComponents/ventas.service';
-
+import * as _ from 'lodash';
+import { MatSnackBar } from '@angular/material';
+import { setTimeout } from 'timers';
 @Component({
   selector: 'app-catalogo',
   templateUrl: './catalogo.component.html',
@@ -48,6 +50,47 @@ export class CatalogoComponent implements OnInit {
   sliderAutoSlide: Number = 0;
   sliderSlideImage: Number = 1;
   sliderAnimationSpeed: any = 1;
+  comentario:any = {};
+  view:boolean = false;
+  listComentario:any = [{
+    nombre: "Ainhoa Pabón",
+    fecha: "2023-05-05",
+    descripcion: " Ordenado para mi esposo, esta muy felices, suave, el tamaño es correcto, hecho con cuidado, embalado de forma segura, la entrega es rápida"
+  },{
+    nombre: "Rayan Ybarra",
+    fecha: "2023-05-04",
+    descripcion: " Lo que necesito gracias,"
+  },{
+    nombre: "Alejandro Almaráz",
+    fecha: "2023-04-06",
+    descripcion: " Excelente"
+  },{
+    nombre: "Rosa Pérez",
+    fecha: "2022-11-26",
+    descripcion: "Me gustó el material bueno y llegué a tiempo"
+  },{
+    nombre: "Dario Soria",
+    fecha: "2023-04-27",
+    descripcion: "Super rápido, buen producto,"
+  },{
+    nombre: "Arnau Pardo",
+    fecha: "2023-03-29",
+    descripcion: "excelentes Calzado, tenia duda en pedirlas pero están super tal y cual en la imagen, las recomiendo....."
+  },{
+    nombre: "María Pilar Viera",
+    fecha: "2022-11-21",
+    descripcion: "Es realmente hermoso me gusta"
+  },{
+    nombre: "Eduardo Alaniz",
+    fecha: "2023-04-17",
+    descripcion: "lindas"
+  },{
+    nombre: "Julia Melgar",
+    fecha: "2023-03-16",
+    descripcion: "très belles Calzado"
+  }];
+
+  durationInSeconds = 5;
 
   constructor(
     private activate: ActivatedRoute,
@@ -55,6 +98,7 @@ export class CatalogoComponent implements OnInit {
     public _tools: ToolsService,
     private _ventas: VentasService,
     private _store: Store<CART>,
+    private _snackBar: MatSnackBar
   ) {
     this.configTime();
     this._store.subscribe((store: any) => {
@@ -62,6 +106,9 @@ export class CatalogoComponent implements OnInit {
       if(!store) return false;
       this.tiendaInfo = store.configuracion || {};
     });
+    setInterval(()=>{
+      this.openSnackBar();
+    }, 10000 );
   }
 
   ngOnInit(): void {
@@ -73,6 +120,7 @@ export class CatalogoComponent implements OnInit {
     this.imageObject = [];
     this._producto.get( { where: { id: this.id } } ).subscribe(( res:any )=>{
       this.data = res.data[0] || {}
+      this.listComentario.push( ...this.data.listComentarios )
       this.urlFoto = this.data.foto;
       for( let row of this.data.listColor ){
         if( row.galeriaList)for( let key of row.galeriaList ) this.listGaleria.push( { ... key, name: row.talla } );
@@ -207,6 +255,83 @@ export class CatalogoComponent implements OnInit {
       this.ds.next();
   }
 
+  guardarComentario(){
+    this._producto.createTestimonio( {
+      descripcion: this.comentario.descripcion,
+      nombre: this.comentario.nombre,
+      email: this.comentario.email,
+      productos: this.data.id
+    }).subscribe(( res:any )=>{
+      this._tools.tooast( { title: "Comentario creado" } );
+      this.comentario = {};
+    },()=> this._tools.tooast( { title: "Error al crear el Comentario" } ) );
+  }
+
+  activates(){
+    console.log("******HELLO")
+    this.view = !this.view;
+  }
+
+  comprarArticulo(){
+    window.open( "https://wa.link/5el24m", "Mas Informacion", "width=640, height=480");
+  }
+
+  openSnackBar() {
+    this._snackBar.openFromComponent(PizzaPartyComponent, {
+      duration: this.durationInSeconds * 1000,
+    });
+  }
 
 
+
+}
+
+@Component({
+  selector: 'snack-bar-component-example-snack',
+  templateUrl: 'snack-bar-component-example-snack.html',
+  styles: [`
+    .example-pizza-party {
+      color: white;
+      font-size: 15px;
+    }
+  `],
+})
+export class PizzaPartyComponent {
+  data:any = [
+    {
+      txt: " Andres Ciudad Armenia"
+    },{
+      txt: " Albaro Ciudad Caqueta"
+    },{
+      txt: " Diego Ciudad Bogota"
+    },{
+      txt: " Juan Ciudad Medellin"
+    },{
+      txt: " Huberth Ciudad Bogota"
+    },{
+      txt: " Cesar Ciudad Bucaramanga"
+    },{
+      txt: " Alberto Ciudad Cartagena"
+    },{
+      txt: " Andrea Ciudad Medellin"
+    },{
+      txt: " Roberto Ciudad Santa martha"
+    },{
+      txt: " Eduardo Ciudad Huila"
+    },{
+      txt: " Alvaro Ciudad Bogota"
+    },
+  ];
+  txtData:string;
+  constructor(){
+
+    function getRandomInt(max) {
+      return Math.floor(Math.random() * max);
+    }
+    this.txtData = this.data[getRandomInt(10)].txt;
+    setInterval(()=>{
+      this.txtData = this.data[getRandomInt(10)].txt;
+    }, 4000 )
+  }
+  // Expected output: 0, 1 or 2
 }
