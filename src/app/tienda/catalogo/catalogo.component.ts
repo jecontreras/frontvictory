@@ -8,8 +8,10 @@ import { ToolsService } from 'src/app/services/tools.service';
 import { ProductoService } from 'src/app/servicesComponents/producto.service';
 import { VentasService } from 'src/app/servicesComponents/ventas.service';
 import * as _ from 'lodash';
-import { MatSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { setTimeout } from 'timers';
+import { ChecktDialogComponent } from '../checkt-dialog/checkt-dialog.component';
+import { FormatosService } from 'src/app/services/formatos.service';
 @Component({
   selector: 'app-catalogo',
   templateUrl: './catalogo.component.html',
@@ -91,6 +93,7 @@ export class CatalogoComponent implements OnInit {
   }];
 
   durationInSeconds = 5;
+  pedido:any = { cantidad:1 };
 
   constructor(
     private activate: ActivatedRoute,
@@ -98,7 +101,9 @@ export class CatalogoComponent implements OnInit {
     public _tools: ToolsService,
     private _ventas: VentasService,
     private _store: Store<CART>,
-    private _snackBar: MatSnackBar
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar,
+    public _formato: FormatosService,
   ) {
     this.configTime();
     this._store.subscribe((store: any) => {
@@ -108,7 +113,7 @@ export class CatalogoComponent implements OnInit {
     });
     setInterval(()=>{
       this.openSnackBar();
-    }, 10000 );
+    }, 50000 );
   }
 
   ngOnInit(): void {
@@ -156,18 +161,19 @@ export class CatalogoComponent implements OnInit {
     `) } `;
     window.open( this.urlWhatsapp );*/
     this.urlWhatsapp = `https://wa.me/573156027551?text=${encodeURIComponent(`
-      Hola estoy interesado en los tenis
-      nombre: ${ this.form.nombre }
-      celular: ${ this.form.celular }
-      direccion: ${ this.form.direccion }
-      ciudad: ${ this.form.ciudad }
-      foto: ${ this.urlFoto }
-      cantidad: 1,
-      Talla: ${ this.form.talla }
-      Total a pagar ${ this.data.pro_uni_venta }
-      envio: Gratis
-      ENVÍO DE 4 -8 DÍAS HÁBILES GRATIS
-      🤝Gracias por su atención y quedo pendiente para recibir por este medio la imagen de la guía de despacho`)}`;
+          DATOS DE CONFIRMACIÓN DE COMPRA:
+          Nombre: ${ this.form.nombre }
+          Celular: ${ this.form.celular }
+          Direccion: ${ this.form.direccion }
+          Ciudad: ${ this.form.ciudad }
+          Foto: ${ this.urlFoto }
+          Cantidad: 1
+          Talla: ${ this.form.talla }
+          Color: ${ this.form.color }
+          Total a pagar: ${ this.data.pro_uni_venta } (PAGO CONTRA ENTREGA)
+          Envío de 4 -8 días hábiles
+      EN ESPERA DE LA GUÍA DE DESPACHO.
+    `)}`;
     console.log(this.urlWhatsapp);
     window.open(this.urlWhatsapp);
     let formsData:any = {
@@ -186,7 +192,8 @@ export class CatalogoComponent implements OnInit {
       "ven_precio": this.data.pro_uni_venta,
       "ven_total": this.data.pro_uni_venta || 0,
       "ven_ganancias": 0,
-      "prv_observacion": "ok la talla es " + this.form.talla,
+      "ven_observacion": "ok la talla es " + this.form.talla + " y el color " + this.form.color,
+      "nombreProducto": "ok la talla es " + this.form.talla + " y el color " + this.form.color,
       "ven_estado": 0,
       "create": moment().format("DD/MM/YYYY"),
       "apartamento": '',
@@ -282,6 +289,28 @@ export class CatalogoComponent implements OnInit {
     });
   }
 
+  suma(){
+    this.data.costo = Number( this.pedido.cantidad ) * this.data.pro_uni_venta;
+  }
+
+  buyArticulo( cantidad:number, opt ){
+    this.suma();
+    //this.AgregarCart();
+    this.data.cantidadAd = opt == true ? cantidad : this.pedido.cantidad || cantidad;
+    this.data.talla = this.pedido.talla;
+    this.data.opt = opt;
+    this.data.foto = this.urlFoto;
+    const dialogRef = this.dialog.open(ChecktDialogComponent,{
+      //width: '855px',
+      //maxHeight: "665px",
+      data: { datos: this.data }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
 
 
 }
@@ -331,7 +360,7 @@ export class PizzaPartyComponent {
     this.txtData = this.data[getRandomInt(10)].txt;
     setInterval(()=>{
       this.txtData = this.data[getRandomInt(10)].txt;
-    }, 4000 )
+    }, 50000 )
   }
   // Expected output: 0, 1 or 2
 }
