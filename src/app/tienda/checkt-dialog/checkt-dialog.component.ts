@@ -30,7 +30,7 @@ export class ChecktDialogComponent implements OnInit {
     private _router: Router,
     private _store: Store<STORAGES>,
     private socialAuthService: SocialAuthService,
-  ) { 
+  ) {
     this._store.subscribe((store: any) => {
       store = store.name;
       if( !store ) return false;
@@ -61,7 +61,7 @@ export class ChecktDialogComponent implements OnInit {
     let data:any = {
       "ven_tipo": "whatsapp",
       "usu_clave_int": 1,
-      "ven_usu_creacion": "joseeduar147@gmail.com",
+      "ven_usu_creacion": "arleytienda@gmail.com",
       "ven_fecha_venta": moment().format("DD/MM/YYYY"),
       "cob_num_cedula_cliente": this.data.cedula,
       "ven_nombre_cliente": this.data.nombre,
@@ -74,7 +74,7 @@ export class ChecktDialogComponent implements OnInit {
       "ven_precio": this.datas.pro_uni_venta,
       "ven_total": this.data.costo || 0,
       "ven_ganancias": 0,
-      "prv_observacion": "ok la talla es " + this.data.talla,
+      "ven_observacion": "ok la talla es " + this.data.talla + " el color "+ this.data.color,
       "ven_estado": 0,
       "create": moment().format("DD/MM/YYYY"),
       "apartamento": this.data.apartamento || '',
@@ -146,17 +146,18 @@ export class ChecktDialogComponent implements OnInit {
 
   mensajeWhat(){
     let mensaje: string = ``;
-    mensaje = `https://wa.me/573156027551?text=${encodeURIComponent(`
+    mensaje = `https://wa.me/573223519032?text=${encodeURIComponent(`
       Hola Servicio al cliente, como esta, saludo cordial,
       para confirmar adquiere este producto
       Nombre de cliente: ${ this.data.nombre }
-      *celular:*${ this.data.telefono }
-      *talla:* ${ this.data.talla }
-      *cantidad:* ${ this.data.cantidadAd || 1 }
-      Ciudad: ${ this.data.ciudad }
-      ${ this.data.barrio } 
-      Dirección: ${ this.data.direccion }
-      ${ this.datas.pro_nombre }
+      *Celular:*${ this.data.telefono }
+      *Talla:* ${ this.data.talla }
+      *Cantidad:* ${ this.data.cantidadAd || 1 }
+      *Color:* ${ this.data.color }
+      *Ciudad:* ${ this.data.ciudad }
+      *Barrio:*${ this.data.barrio }
+      *Dirección:* ${ this.data.direccion }
+      *Nombre Cliente:*${ this.datas.pro_nombre }
 
       TOTAL FACTURA ${( this.data.costo )}
       🤝Gracias por su atención y quedo pendiente para recibir por este medio la imagen de la guía de despacho`)}`;

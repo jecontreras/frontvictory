@@ -130,11 +130,6 @@
                 placeholder="Nombre y apellido" required>
         </div>
         <div class="form-group col-12">
-            <label for="exampleFormControlInput1">Cedula</label>
-            <input type="text" [(ngModel)]="data.cedula" class="form-control form-control-sm"
-                placeholder="Es necesario tu cedula para llenar la informacion de la guia" required>
-        </div>
-        <div class="form-group col-12">
             <label for="exampleFormControlInput1">Numero de Telefono</label>
             <input type="text" [(ngModel)]="data.telefono" class="form-control form-control-sm"
                 placeholder="Numero telefono" required>
@@ -159,6 +154,11 @@
             <input type="text" [(ngModel)]="data.talla" class="form-control form-control-sm"
                 placeholder="talla del producto" required>
         </div>
+        <div class="form-group col-12">
+          <label for="exampleFormControlInput1">Color</label>
+          <input type="text" [(ngModel)]="data.color" class="form-control form-control-sm"
+              placeholder="talla del producto" required>
+      </div>
         <div class="form-group col-12">
             <label for="exampleFormControlInput1">Cantidad</label>
             <input type="text" [(ngModel)]="data.cantidadAd" class="form-control form-control-sm" (change)="suma()"

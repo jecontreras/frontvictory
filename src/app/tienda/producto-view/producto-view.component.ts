@@ -99,7 +99,7 @@ export class ProductosViewComponent implements OnInit {
     public dialog: MatDialog,
     public _formato: FormatosService,
 
-  ) { 
+  ) {
     this._store.subscribe((store: any) => {
       console.log(store);
       store = store.name;
@@ -295,7 +295,7 @@ export class ProductosViewComponent implements OnInit {
   masInfo(obj:any){
     obj.talla = this.pedido.talla;
     obj.cantidad = this.pedido.cantidad || 1;
-    let cerialNumero:any = ''; 
+    let cerialNumero:any = '';
     let numeroSplit:any;
     let cabeza:any = this.dataUser.cabeza;
     if( cabeza ){
@@ -329,7 +329,7 @@ export class ProductosViewComponent implements OnInit {
       } );
     },()=> this._tools.tooast( { title: "Error al crear el Comentario" } ) );
   }
-  
+
   comprarArticulo( cantidad:number, opt ){
     this.suma();
     //this.AgregarCart();
@@ -349,7 +349,11 @@ export class ProductosViewComponent implements OnInit {
   }
 
   validarNumero(){
-    return this.tiendaInfo.numeroCelular || "3156027551";
+    return this.tiendaInfo.numeroCelular || "3223519032";
+  }
+
+  handleSelect( item ){
+    this.data.colorSelect = item.talla;
   }
 
 

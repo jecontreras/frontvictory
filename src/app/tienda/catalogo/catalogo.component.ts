@@ -160,7 +160,7 @@ export class CatalogoComponent implements OnInit {
       ENVÍO DE 4 -8 DÍAS HÁBILES GRATIS
     `) } `;
     window.open( this.urlWhatsapp );*/
-    this.urlWhatsapp = `https://wa.me/573156027551?text=${encodeURIComponent(`
+    this.urlWhatsapp = `https://wa.me/573223519032?text=${encodeURIComponent(`
           DATOS DE CONFIRMACIÓN DE COMPRA:
           Nombre: ${ this.form.nombre }
           Celular: ${ this.form.celular }
