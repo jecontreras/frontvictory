@@ -45,6 +45,7 @@ export class ChecktDialogComponent implements OnInit {
     this.data.cantidadAd = this.datas.cantidadAd || 1;
     this.data.costo = this.datas.costo || 105000;
     this.data.opt = this.datas.opt;
+    this.data.color = this.datas.color;
     this.suma();
     this.socialAuthService.authState.subscribe( async (user) => {
       let result = await this._user.initProcess( user );

@@ -337,6 +337,7 @@ export class ProductosViewComponent implements OnInit {
     this.data.talla = this.pedido.talla;
     this.data.opt = opt;
     this.data.foto = this.viewsImagen;
+    this.data.color = this.data.colorSelect;
     const dialogRef = this.dialog.open(ChecktDialogComponent,{
       //width: '855px',
       //maxHeight: "665px",
