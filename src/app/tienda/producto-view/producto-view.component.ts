@@ -117,7 +117,7 @@ export class ProductosViewComponent implements OnInit {
       this.getProducto();
       this.getProductos();
     }
-    window.document.scrollingElement.scrollTop=0
+    setTimeout(()=>{window.document.scrollingElement.scrollTop=0},2000);
 
   }
 
