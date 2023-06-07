@@ -122,7 +122,11 @@ export class ProductosViewComponent implements OnInit {
   }
 
   getProducto(){
-    this._producto.get({ where: { id: this.id}}).subscribe((res:any)=>{ this.data = res.data[0] || {}; this.viewsImagen = this.data.foto; if( !this.data.listComentarios[0] ) this.data.listComentarios = []; this.listGaleria = this.data.galeria || []; this.listGaleria.push( { id: 1000, pri_imagen: this.data.foto }) }, error=> { console.error(error); this._tools.presentToast('Error de servidor'); });
+    this._producto.get({ where: { id: this.id}}).subscribe((res:any)=>{ this.data = res.data[0] || {};
+      try {
+        this.data.listTallas = this.data.listColor[0].tallaSelect.filter( item => item.cantidad );
+      } catch (error) {}
+    this.viewsImagen = this.data.foto; if( !this.data.listComentarios[0] ) this.data.listComentarios = []; this.listGaleria = this.data.galeria || []; this.listGaleria.push( { id: 1000, pri_imagen: this.data.foto }) }, error=> { console.error(error); this._tools.presentToast('Error de servidor'); });
   }
 
   verImagen( img:string ){

@@ -123,9 +123,12 @@ export class CatalogoComponent implements OnInit {
 
   getArticulos(){
     this.imageObject = [];
+    this.listComentario = [];
     this._producto.get( { where: { id: this.id } } ).subscribe(( res:any )=>{
       this.data = res.data[0] || {}
-      this.listComentario.push( ...this.data.listComentarios )
+      try {
+        this.listComentario.push( ...this.data.listComentarios )
+      } catch (error) { }
       this.urlFoto = this.data.foto;
       for( let row of this.data.listColor ){
         if( row.galeriaList)for( let key of row.galeriaList ) this.listGaleria.push( { ... key, name: row.talla } );
@@ -140,6 +143,9 @@ export class CatalogoComponent implements OnInit {
         id: row.id,
         title: ""
       });
+      try {
+        this.data.listTallas = this.data.listColor[0].tallaSelect.filter( item => item.cantidad );
+      } catch (error) {}
       console.log("***27", this.data, "*******", this.listGaleria, this.imageObject )
     });
   }
