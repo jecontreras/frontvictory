@@ -126,7 +126,7 @@ export class CatalogoComponent implements OnInit {
     this._producto.get( { where: { id: this.id } } ).subscribe(( res:any )=>{
       this.data = res.data[0] || {}
       try {
-        this.listComentario.push( ...this.data.listComentarios )
+        if( this.data.listComentarios ) this.listComentario.push( ...this.data.listComentarios )
       } catch (error) { }
       this.urlFoto = this.data.foto;
       for( let row of this.data.listColor ){
