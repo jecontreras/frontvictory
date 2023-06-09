@@ -89,7 +89,7 @@ export class CatalogoComponent implements OnInit {
   },{
     nombre: "Julia Melgar",
     fecha: "2023-03-16",
-    descripcion: "très belles Calzado"
+    descripcion: "Son bellos"
   }];
 
   durationInSeconds = 5;
@@ -123,7 +123,6 @@ export class CatalogoComponent implements OnInit {
 
   getArticulos(){
     this.imageObject = [];
-    this.listComentario = [];
     this._producto.get( { where: { id: this.id } } ).subscribe(( res:any )=>{
       this.data = res.data[0] || {}
       try {
@@ -287,7 +286,7 @@ export class CatalogoComponent implements OnInit {
   }
 
   comprarArticulo(){
-    window.open( "https://wa.link/5el24m", "Mas Informacion", "width=640, height=480");
+    window.open( "https://wa.link/q1we4d", "Mas Informacion", "width=640, height=480");
   }
 
   openSnackBar() {
@@ -366,9 +365,17 @@ export class PizzaPartyComponent {
       return Math.floor(Math.random() * max);
     }
     this.txtData = this.data[getRandomInt(10)].txt;
+    this.audioNotificando('./assets/sonidos/notificando.mp3');
     setInterval(()=>{
       this.txtData = this.data[getRandomInt(10)].txt;
     }, 50000 )
+  }
+  audioNotificando(obj:string){
+    console.log("**SONAR")
+    let sonido = new Audio();
+    sonido.src = obj;
+    sonido.load();
+    sonido.play();
   }
   // Expected output: 0, 1 or 2
 }

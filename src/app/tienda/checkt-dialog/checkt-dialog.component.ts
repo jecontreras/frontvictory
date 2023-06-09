@@ -73,7 +73,7 @@ export class ChecktDialogComponent implements OnInit {
       "ven_cantidad": this.datas.cantidadAd || 1,
       "ven_tallas": this.data.talla,
       "ven_precio": this.datas.pro_uni_venta,
-      "ven_total": this.data.costo || 0,
+      "ven_total": ( this.data.costo + ( this.data.pro_vendedor || 0 ) ) || 0,
       "ven_ganancias": 0,
       "ven_observacion": "ok la talla es " + this.data.talla + " el color "+ this.data.color,
       "ven_estado": 0,
@@ -160,7 +160,7 @@ export class ChecktDialogComponent implements OnInit {
       *Dirección:* ${ this.data.direccion }
       *Nombre Cliente:*${ this.datas.pro_nombre }
 
-      TOTAL FACTURA ${( this.data.costo )}
+      TOTAL FACTURA ${( this.data.costo + ( this.data.pro_vendedor || 0 ) )}
       🤝Gracias por su atención y quedo pendiente para recibir por este medio la imagen de la guía de despacho`)}`;
     console.log(mensaje);
     window.open(mensaje);

@@ -129,11 +129,16 @@ export class ProductosViewComponent implements OnInit {
         this.data.listTallas = _.orderBy( this.data.listTallas , ['tal_descripcion'], ['DEC'] );
         console.log( "129", this.data )
       } catch (error) {}
-    this.viewsImagen = this.data.foto; if( !this.data.listComentarios[0] ) this.data.listComentarios = []; this.listGaleria = this.data.galeria || []; this.listGaleria.push( { id: 1000, pri_imagen: this.data.foto }) }, error=> { console.error(error); this._tools.presentToast('Error de servidor'); });
+    this.viewsImagen = this.data.foto; 
+    if( !this.data.listComentarios[0] ) this.data.listComentarios = []; 
+    this.listGaleria = this.data.galeria || []; 
+    this.listGaleria.push( { id: 1000, pri_imagen: this.data.foto }) }, error=> { console.error(error); this._tools.presentToast('Error de servidor'); });
   }
 
-  verImagen( img:string ){
-    this.viewsImagen = img;
+  verImagen( data:any ){
+    this.viewsImagen = data.pri_imagen;
+    let filter = _.findIndex(this.data.listColor, ['foto',this.viewsImagen] );
+    if( filter >=0 ) this.handleSelect( this.data.listColor[filter] );
   }
 
   async getProductos(){
