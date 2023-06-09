@@ -215,6 +215,7 @@ export class CatalogoComponent implements OnInit {
   handleColor(){
     console.log("***", this.data, this.form)
     this.urlFoto = ( this.data.listColor.find( item => item.talla == this.form.color ) ).foto;
+    this._tools.openFotoAlert( this.urlFoto );
   }
   validador(){
     if( !this.form.nombre ) { this._tools.tooast( { title: "Error falta el nombre ", icon: "error"}); return false; }
@@ -300,7 +301,8 @@ export class CatalogoComponent implements OnInit {
   }
 
   buyArticulo( cantidad:number, opt ){
-    this.suma();
+    window.document.scrollingElement.scrollTop=3000;
+    /*this.suma();
     //this.AgregarCart();
     this.data.cantidadAd = opt == true ? cantidad : this.pedido.cantidad || cantidad;
     this.data.talla = this.pedido.talla;
@@ -314,7 +316,7 @@ export class CatalogoComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-    });
+    });*/
   }
 
 

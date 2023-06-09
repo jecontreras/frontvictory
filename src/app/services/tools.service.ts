@@ -348,5 +348,16 @@ export class ToolsService {
       window.open(`https://www.linkedin.com/shareArticle?url=${shareUrl}&title=${title}&summary=${summary}`, 'sharer');
     }
 
+    openFotoAlert( foto:string ){
+      Swal.fire({
+        title: '',
+        text: '',
+        imageUrl: foto,
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: '',
+      })
+    }
+
 
 }

@@ -89,6 +89,11 @@ export class FormproductosComponent implements OnInit {
     if (Object.keys(this.datas.datos).length > 0) {
       this.data = _.clone(this.datas.datos);
       this.id = this.data.id;
+      //this.data
+      try {
+        for(let row of this.data.listColor ) { for( let item of row.tallaSelect ) item.tal_descripcion = Number( item.tal_descripcion ); row.tallaSelect = _.orderBy(row.tallaSelect, ['tal_descripcion'], ['DEC']); }
+      } catch (error) { }
+      //console.log("***", this.data)
       if( !this.id ) {
         this.titulo = "Crear";
         this.id = ""; this.data.pro_codigo = this.codigo(); this.data.pro_sw_tallas = 1; this.disableSpinner = false; this.listFotos = [];

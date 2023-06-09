@@ -105,7 +105,7 @@ font-size: 18px;
 text-align: center;
 }
 } </style><div class=headline-inner style="height: 70px;">
-<h2 style="text-align: center;"><span style="color: white; background-color: rgba(0, 0, 0, 0); font-size: 200%;">HOMBRE</span>
+<h2 style="text-align: center;"><span style="color: white; background-color: rgba(0, 0, 0, 0); font-size: 200%;">{{ data['pro_categoria']?.cat_nombre }}</span>
 </h2>
 </div>
 </div>
@@ -126,7 +126,7 @@ text-align: center;
 <div class=element-wrapper>
 <div
 style="font-size: 178%; line-height: 1; color: rgb(0, 0, 0); margin: 0px; padding: 5px; background-color: white; text-shadow: transparent 0px 0px 0px;"><div class=headline-inner style="    text-align: center;">
-<h3><strong>ANTES <s>$230.000</s></strong></h3>
+<h3><strong>ANTES <s>$150.000</s></strong></h3>
 </div>
 </div>
 </div>
@@ -207,7 +207,8 @@ style="font-size: 178%; line-height: 1; border-style: none; border-width: medium
   <div class="img el-290431" style="margin: 5px 0px 0px;">
   <style> .el-290431 { align-items: center; } </style>
   <a target="_self">
-    <img  src="assets/imagenes/talla1.webp" data-srcset="assets/imagenes/talla2.webp 1x" alt data-sizes=auto data-src="assets/imagenes/talla2.webp" class="lazyload" width=100% height=auto>
+    <img *ngIf="data['pro_categoria']?.id == 16"  src="assets/imagenes/talla1.webp" data-srcset="assets/imagenes/talla2.webp 1x" alt data-sizes=auto data-src="assets/imagenes/talla2.webp" class="lazyload" width=100% height=auto>
+    <img *ngIf="data['pro_categoria']?.id == 14"  src="assets/img/tallM.png" data-srcset="assets/img/tallM.png 1x" alt data-sizes=auto data-src="assets/img/tallM.png" class="lazyload" width=100% height=auto>
   </a>
   </div>
   </div>
@@ -216,8 +217,10 @@ style="font-size: 178%; line-height: 1; border-style: none; border-width: medium
 <div
 style="font-size: 178%; line-height: 1; color: white; margin: 10px 0px 0px; padding: 5px; text-shadow: transparent 0px 0px 0px;">
 <h3 style="text-align: center;"><strong class=ql-font-montserrat style="color: rgb(7, 7, 7);">TALLAS DISPONIBLES</strong></h3>
-<p style="text-align: center;"><span style="background-color: rgb(0, 0, 0); font-size: 24px;">37 | 38 | 39</span><span
+<p *ngIf="data['pro_categoria']?.id == 16" style="text-align: center;"><span style="background-color: rgb(0, 0, 0); font-size: 24px;">37 | 38 | 39</span><span
 style="background-color: rgb(0, 0, 0); font-size: 24px; color: rgb(255, 255, 255);"> | 40 | 41 | 42 | 43</span>
+<p *ngIf="data['pro_categoria']?.id == 14" style="text-align: center;"><span style="background-color: rgb(0, 0, 0); font-size: 24px;">6 | 8 | 10</span><span
+  style="background-color: rgb(0, 0, 0); font-size: 24px; color: rgb(255, 255, 255);"> | 11 | 12 | 14 | 16</span>
 <h3><br></h3>
 </div>
 </div>
@@ -276,11 +279,11 @@ align-items: center;
     </span>
   </a>
   <br>
-  <a target=_self (click)="buyArticulo( 2, true )" class=btn style="border-radius: 0px; margin: 30px 0px 20px; padding: 15px; background-color: rgb(0, 0, 0);">
+  <!--<a target=_self (click)="buyArticulo( 2, true )" class=btn style="border-radius: 0px; margin: 30px 0px 20px; padding: 15px; background-color: rgb(0, 0, 0);">
     <span class=btn-headline style="font-weight: bold; font-size: 20px; text-align: center;color: rgb(255, 42, 0);">⚠ LLEVA 2 PARES <br> POR {{ _formato.monedaChange( 3, 2, ( ( data.pro_uni_venta * 2 ) - 20000 ) || 0 ) }}
       DESCUENTO 18% ⚠
     </span>
-  </a>
+  </a>-->
   </div>
   </div>
 <div class=element-wrapper>
@@ -476,11 +479,11 @@ style="line-height: 1; margin: 10px 0px; padding: 5px; text-shadow: transparent 
           <img alt="" src="{{urlFoto}}?height=220&amp;width=220&amp;auto=webp&amp;fit=bounds">
       </div>
                   <span class="pl-nvalue">
-                      <span class="name">TENIS HOMBRE</span>
+                      <span class="name">{{ data['pro_categoria']?.cat_nombre }} </span>
                   <span class="top-tag" style="background: rgb(255, 0, 0);">EL MAS VENDIDO 🔥</span></span>
               </div>
               <div class="pl-price">
-                  <span class="pl-pvalue"><p style="text-align: center;"><s>$230.000</s></p><p style="text-align: center;"><strong style="color: rgb(230, 0, 0);">{{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }} </strong></p></span>
+                  <span class="pl-pvalue"><p style="text-align: center;"><s>$150.000</s></p><p style="text-align: center;"><strong style="color: rgb(230, 0, 0);">{{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }} </strong></p></span>
               </div>
           </label>
           <!--<div class="pl-variants">
@@ -531,17 +534,17 @@ style="line-height: 1; margin: 10px 0px; padding: 5px; text-shadow: transparent 
       <div class="os-row">
                       <div class="os-name">TENIS HOMBRE<span class="os-voption">&nbsp;&nbsp; ● &nbsp;&nbsp;</span>
                       </div>
-                      <div class="os-price"><p style="text-align: center;"><s>$230.000</s></p><p style="text-align: center;"><strong style="color: rgb(230, 0, 0);"> {{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }} </strong></p></div>
+                      <div class="os-price"><p style="text-align: center;"><s>$150.000</s></p><p style="text-align: center;"><strong style="color: rgb(230, 0, 0);"> {{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }} </strong></p></div>
                   </div>
                   <div class="os-row">
                       <div class="os-name">ENVIO NACIONAL
                       </div>
-                      <div class="os-price"><p style="text-align: center;"><strong>Gratis</strong></p></div>
+                      <div class="os-price"><p style="text-align: center;"><strong>$15.000</strong></p></div>
                   </div>
                 </div>
     <div class="os-total os-row" style="color: rgb(7, 7, 7); font-weight: bold; font-size: 14px;">
       <div class="os-name">TOTAL</div>
-      <div class="os-price">{{this._tools.monedaChange( 3, 2, data.pro_uni_venta ) }} </div>
+      <div class="os-price">{{this._tools.monedaChange( 3, 2, data.pro_uni_venta + 15000 ) }} </div>
     </div>
   </div>
   <label data-selected=true class=order-bump

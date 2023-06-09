@@ -55,15 +55,15 @@
                   <section *ngIf="data['listTallas']?.length > 0 ">
                     <h4>Talla</h4>
                     <div class="aa-prod-view-size">
-                      <a class="pointer" *ngFor="let item of data.listTallas" [ngClass]="{selecciono: item.check}"
-                        (click)="this.pedido.talla = item.tal_descripcion; item.check = !item.check">{{
+                      <a class="pointer" *ngFor="let item of data.listTallas" [ngClass]="{selecciono: item.check1}"
+                        (click)="checkTalla( item );">{{
                         item.tal_descripcion }}</a>
                     </div>
                   </section>
                   <h4>Color</h4>
                     <div class="aa-color-tag">
-                    <a class="pointer" *ngFor="let item of data.listColor" [ngClass]="{selecciono: item.check}"
-                      (click)="handleSelect( item ); item.check = !item.check" style="width: auto !important;">{{
+                    <a class="pointer" *ngFor="let item of data.listColor" [ngClass]="{selecciono: item.check1}"
+                      (click)="handleSelect( item );" style="width: auto !important;">{{
                       item.talla }}
                     </a>
                       <!--<a href="#" class="aa-color-green"></a>
