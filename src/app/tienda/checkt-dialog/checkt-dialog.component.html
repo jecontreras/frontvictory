@@ -100,7 +100,7 @@
                             <div data-v-2b9a7796="" style="box-sizing: border-box;">Envio</div>
                             <div class="total-value" data-v-2b9a7796=""
                                 style="box-sizing: border-box; font-size: 20px;">
-                                <span data-v-2b9a7796="" style="box-sizing: border-box;">{{ data.pro_vendedor || 'Gratis contra entrega' }} </span>
+                                <span data-v-2b9a7796="" style="box-sizing: border-box;">{{ datas.pro_vendedor || 'Gratis contra entrega' }} </span>
                             </div>
                         </div>
                         <div class="
@@ -116,7 +116,7 @@
                             <div class="total-value" data-v-2b9a7796=""
                                 style="box-sizing: border-box; font-size: 20px;">
                                 <span data-v-2b9a7796="" style="box-sizing: border-box;">{{ _tools.monedaChange(
-                                    3,2,( this.data.costo + ( this.data.pro_vendedor || 0) ) || 0 ) }}</span>
+                                    3,2,( this.data.costo + ( this.datas.pro_vendedor || 0) ) || 0 ) }}</span>
                             </div>
                         </div>
                     </div>
