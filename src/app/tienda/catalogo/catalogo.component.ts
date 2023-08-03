@@ -165,7 +165,7 @@ export class CatalogoComponent implements OnInit {
       ENVÍO DE 4 -8 DÍAS HÁBILES GRATIS
     `) } `;
     window.open( this.urlWhatsapp );*/
-    this.urlWhatsapp = `https://wa.me/573223519032?text=${encodeURIComponent(`
+    this.urlWhatsapp = `https://wa.me/57${ this.tiendaInfo.numeroCelular }?text=${encodeURIComponent(`
           DATOS DE CONFIRMACIÓN DE COMPRA:
           Nombre: ${ this.form.nombre }
           Celular: ${ this.form.celular }
@@ -286,7 +286,10 @@ export class CatalogoComponent implements OnInit {
   }
 
   comprarArticulo(){
-    window.open( "https://wa.link/q1we4d", "Mas Informacion", "width=640, height=480");
+    let url = `https://wa.me/57${ this.tiendaInfo.numeroCelular }?text=${encodeURIComponent(`
+      *Hola necesito mas informacion gracias*!
+    `)}`;
+    window.open( url, "Mas Informacion", "width=640, height=480");
   }
 
   openSnackBar() {

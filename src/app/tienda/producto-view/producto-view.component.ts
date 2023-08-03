@@ -362,7 +362,7 @@ export class ProductosViewComponent implements OnInit {
   }
 
   validarNumero(){
-    return this.tiendaInfo.numeroCelular || "3223519032";
+    return this.tiendaInfo.numeroCelular || "3223524412";
   }
 
   handleSelect( item ){
